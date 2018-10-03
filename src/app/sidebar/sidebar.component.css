@@ -1,0 +1,39 @@
+nav {
+    background: #2D2E2E;
+    height: 100%;
+}
+
+ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+}
+
+a {
+        color: #fff;
+        padding-right: 10px;
+        padding-left: 5px;
+        display: inline-block
+}
+
+li .activated {
+                background-color: #00a8ff;    
+}
+
+hr.style-one {
+        border: 0;
+        height: 1px;
+        background: white;
+        background-image: linear-gradient(to right, #333, #ccc, #333);
+    }
+
+    .first-item{
+            padding-top: 10px
+    }
+
+    .navbar-labels {
+            display: inline-block;
+            text-decoration: none;
+            padding-left: 10px;
+            
+    }
