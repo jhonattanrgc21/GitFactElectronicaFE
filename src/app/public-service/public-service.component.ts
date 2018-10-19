@@ -19,6 +19,8 @@ export class PublicServiceComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
+  
   publicServiceReceiptRows: Object = {};
   validArgs = false;
   isActLengthCorrect = 'true';
@@ -26,17 +28,17 @@ export class PublicServiceComponent implements OnInit {
   isLoadingResults = false;
   
 
-  @Input() state: any;
-  @Input() paymethod: any;
-  @Input() salecondition: any;
-  @Input() cartera: any;
-  @Input() doctype: any;
 
-  receiptDetail: any;
+  state: String;
+  paymethod: String;
+  salecondition: String;
+  cartera: String;
+  doctype: String;
+
+  receiptDetail: PublicServiceReceipts;
 
   @Input() identification : String;
   @Input() accountNumber = '';
-  @Input() cardNumber: String;
   @Input() dateFrom: String = '';
   @Input() dateTo: String = '';
   @Input() amountFrom: String;
@@ -48,16 +50,27 @@ export class PublicServiceComponent implements OnInit {
   stateList: any; 
   payMethodList: any; 
   saleConditionList: any;
-  receiptsList: DataPubServ;
+  receiptsList: any;
+  result: BillSent;
+
 
   constructor(private publicServiceService: PublicServiceServiceService, private dialog: MatDialog,
-    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar) {
+    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService) {
     this.accountNumber = '';
-    this.cardNumber = '';
+    this.identification = '';
     this.dateFrom = '';
     this.dateTo = '';
     this.amountFrom = '';
     this.amountTo = '';
+    this.state = '';
+    this.paymethod = '';
+    this.salecondition = '';
+    this.doctype = '';
+    this.selectedState= '';
+    this.selectedPaymethod= '';
+    this.selectedSalecondition= '';
+    this.selectedCartera= '';
+    this.selectedDoctype= '';
   }
 
   tableData: any;
@@ -65,8 +78,11 @@ export class PublicServiceComponent implements OnInit {
   publicServices = new FormControl();
   publicServicesList: PublicServicesList[];
 
-  displayedColumns: string[] = ['accountNumber', 'cardNumber', 'publicService', 'currency', 'amount',
-    'date', 'invoiceNumber', 'transactionNumber', 'voucher', 'channel', 'actions'];
+  displayedColumns: string[] = ['consecutiveNumber', 'billDate', 'identification', 'name',
+    'moneda', 'montoFinal', 'tipoPago','estado', 'reenvio', 'pdf'];
+
+
+    
 
   dataSource = new MatTableDataSource<PublicServiceReceipts>();
 
@@ -80,7 +96,6 @@ export class PublicServiceComponent implements OnInit {
     if (this.accountNumber == null) {
       this.accountNumber = '';
     }
-
     if (this.identification == null) {
       this.identification = '';
     }
@@ -111,22 +126,19 @@ export class PublicServiceComponent implements OnInit {
     if (this.doctype == null) {
       this.doctype = '';
     }
+
     if ((this.accountNumber.length > 6)) {
       this.isActLengthCorrect = 'true';
     } else {
       this.isActLengthCorrect = 'false';
-    }
-    if (this.cardNumber.toString().length > 15) {
-      this.isCrdLengthCorrect = 'true';
-    } else {
-      this.isCrdLengthCorrect = 'false';
     }
 
     if (!(
       (this.accountNumber === '') && (this.identification === '')
       && (!(this.dateFrom !== '' && this.dateTo !== ''))
       && (!(this.amountFrom !== '' && this.amountTo !== ''))
-      && this.state === '')
+      && !!!this.selectedState[0] && !!!this.selectedDoctype[0] && !!!this.selectedCartera && !!!this.selectedPaymethod[0] && !!!this.selectedSalecondition[0]
+    )
     ) {
       this.validArgs = true;
     } else {
@@ -156,58 +168,98 @@ getDocType(){
     this.publicServiceService.getDocType().subscribe(data => {this.docTypeList = data});
   }
 
+sendBillPDF(consecutiveNumber){
+  this.publicServiceService.sendBillPDF(consecutiveNumber).subscribe(data => 
+    {
+     this.result = <BillSent>data;
+      if(this.result.sent){
+        this.openSnackBar('Ocurrio un error al enviar el correo','');
+     } else{
+      this.openSnackBar('Correo enviado correctamente','');
+     } 
+  });
+}
+
+
 getBillsFilter(){
   if (this.accountNumber === '') {
     this.accountNumber = null;
   }
-  this.publicServiceService.getBillFilter(this.accountNumber)
+  if (this.identification === '') {
+    this.identification = null;
+  }
+  if (this.dateFrom === '') {
+    this.dateFrom = null;
+  }
+  if (this.dateTo === '') {
+    this.dateTo = null;
+  }
+  if (this.amountFrom === '') {
+    this.amountFrom = null;
+  }
+  if (this.amountTo === '') {
+    this.amountTo = null;
+  }
+  if (this.state === '') {
+    this.state = null;
+  }
+  if (this.paymethod === '') {
+    this.paymethod = null;
+  }
+  if (this.salecondition === '') {
+    this.salecondition = null;
+  }
+  if (this.cartera === '') {
+    this.cartera = null;
+  }
+  if (this.doctype === '') {
+    this.doctype = null;
+  }
+  this.publicServiceService.getBillFilter( this.accountNumber, this.identification, this.dateFrom,
+    this.dateTo, this.amountFrom, this.amountTo, this.state,this.paymethod,this.salecondition,this.cartera,this.doctype)
     .subscribe(data => {
       this.isLoadingResults = false;
       this.receiptsList = <DataPubServ>data;
       if (this.receiptsList.isEmpty === true) {
         this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
       } else {
-        this.tableData = this.receiptsList.result;
+        this.tableData = this.receiptsList;
         this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
         this.changeDetectorRefs.detectChanges();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      }
-
-    } );
 }
 
-  getPublicServices() {
-    (this.publicServiceService.getPublicServicesList())
-      .subscribe(data => {
-        this.publicServicesList = <PublicServicesList[]>data;
-      });
+    } );
   }
+
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.publicServicesList = [];
-    this.getPublicServices();
+    this.payMethodList= '';
+    this.stateList = '';
+    this.saleConditionList = '';
+    this.carteraList = '';
+    this.docTypeList = '';
     this.getStateBill();
     this.getPayMethod();
     this.getSaleCondition();
     this.getCartera();
     this.getDocType();
-
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   searchByArgs() {
     if (this.validArgs) {
-      this.getPublicServiceReceiptsByParams();
+      this.getElectronicBillsByParams();
     }
   }
   openReceiptDetailModal(publicServiceReceiptId: number): void {
     this.publicServiceService.getReceiptDetail(publicServiceReceiptId).subscribe(
       data => {
-        this.receiptDetail = data;
+        this.receiptDetail = <PublicServiceReceipts> data;
         const dialogRef = this.dialog.open(PublicServiceReceiptDetailModalComponent, {
           width: '500px',
           data: {'data' : this.receiptDetail }
@@ -217,43 +269,87 @@ getBillsFilter(){
   }
 
 
-  getPublicServiceReceiptsByParams() {
-    if (!!this.state) {
-      this.publicService = this.state.id;
-    } else {
-      this.publicService = null;
-    }
+  getElectronicBillsByParams() {
     this.isLoadingResults = true;
+
+
     if (this.accountNumber === '') {
       this.accountNumber = null;
+    }else{
+      this.accountNumber = this.accountNumber;
     }
-    if (this.cardNumber === '') {
-      this.cardNumber = null;
+
+    if (this.identification === '') {
+      this.identification = null;
+    }else{
+      this.identification = this.identification;
     }
     if (this.dateFrom === '') {
       this.dateFrom = null;
+    }else{
+      this.dateFrom = this.dateFrom;
     }
+
     if (this.dateTo === '') {
       this.dateTo = null;
+    }else{
+      this.dateTo = this.dateTo;
     }
+    
     if (this.amountFrom === '') {
       this.amountFrom = null;
+    }else{
+      this.amountFrom = this.amountFrom;
     }
+
     if (this.amountTo === '') {
       this.amountTo = null;
+    }else{
+      this.amountTo = this.amountTo;
     }
-    if (this.publicService === '') {
-      this.publicService = null;
+
+    if (this.selectedState[0] === '') {
+      this.selectedState = null;
+    } else{
+      this.state = this.selectedState[0];
     }
-    this.publicServiceService.getPublicServiceReceiptsByParams(this.accountNumber, this.cardNumber, this.dateFrom,
-      this.dateTo, this.amountFrom, this.amountTo, this.publicService)
+
+    if (this.selectedPaymethod[0] === '') {
+      this.selectedPaymethod = null;
+    }
+    else{
+      this.paymethod = this.selectedPaymethod[0];
+    }
+
+    if (this.selectedSalecondition[0] === '') {
+      this.selectedSalecondition = null;
+    }else{
+      this.salecondition = this.selectedPaymethod[0];
+    }
+
+    if (this.selectedCartera === '') {
+      this.selectedCartera = null;
+    }else{
+      this.cartera = this.selectedCartera;
+    }
+
+    if (this.selectedDoctype[0] === '') {
+      this.selectedDoctype = null;
+    }else{
+      this.doctype = this.selectedDoctype[0];
+    }
+
+
+
+    this.publicServiceService.getPublicServiceReceiptsByParams(this.accountNumber, this.identification, this.dateFrom,
+      this.dateTo, this.amountFrom, this.amountTo, this.state,this.paymethod,this.salecondition,this.cartera,this.doctype)
       .subscribe(data => {
         this.isLoadingResults = false;
-        this.receiptsList = <DataPubServ>data;
+        this.receiptsList = data;
         if (this.receiptsList.isEmpty === true) {
           this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
         } else {
-          this.tableData = this.receiptsList.result;
+          this.tableData = this.receiptsList;
           this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
           this.changeDetectorRefs.detectChanges();
           this.dataSource.paginator = this.paginator;
@@ -278,18 +374,21 @@ export interface PublicService {
   id: number;
 }
 
+export interface BillSent {
+  sent: boolean;
+}
+
 export interface PublicServiceReceipts {
-  publicServiceReceiptId: number;
-  accountNumber: string;
-  cardNumber: string;
-  publicService: string;
-  currency: string;
-  amount: string;
-  date: string;
-  invoiceNumber: string;
-  transactionNumber: string;
-  voucher: string;
-  channel: string;
+  consecutiveNumber: string;
+  passwordGenerated: string;
+  billDate: string;
+  identification: string;
+  name: string;
+  moneda: string;
+  montoFinal: string;
+  tipoPago: string;
+  estado: string;
+  detalle: string;
 }
 
 
