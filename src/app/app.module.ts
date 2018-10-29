@@ -12,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // tslint:disable-next-line:max-line-length
 import { PublicServiceReceiptDetailModalComponent } from './public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
+import { MatConfirmComponent } from './mat-confirm/mat-confirm.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PublicServiceReceiptDetailModalComponent } from './public-service/modal
     PublicServiceComponent,
     ToolBarComponent,
     InsuranceComponent,
-    PublicServiceReceiptDetailModalComponent
+    PublicServiceReceiptDetailModalComponent,
+    MatConfirmComponent
   ],
   entryComponents: [PublicServiceComponent, PublicServiceReceiptDetailModalComponent],
   imports: [
