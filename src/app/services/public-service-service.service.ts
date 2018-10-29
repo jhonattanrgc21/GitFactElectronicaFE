@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+
+
+import { PublicServiceReceiptDetailModalComponent } from '../public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
+import { MatConfirmComponent } from '../mat-confirm/mat-confirm.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -7,23 +11,35 @@ export class PublicServiceServiceService {
   url = 'http://localhost:8080/sib/api';
   constructor(private http: HttpClient) { }
 
-  getPublicServiceReceiptsByParams(accountNumber, cardNumber, dateFrom, dateTo, amountFrom, amountTo, publicServiceId) {
-    const method = '/publicservice/findpublicservicereceiptbyparams';
+
+  getPublicServiceReceiptsByParams(accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
+    const method = '/getbillfilter';
     return this.http.post(
       this.url + method,
       JSON.stringify({
-        'accountNumber': accountNumber, 'cardNumber': cardNumber, 'dateRangeMin': dateFrom, 'dateRangeMax': dateTo,
-        'amountRangeMin': amountFrom, 'amountRangeMax': amountTo, 'publicServiceId': publicServiceId
+        'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
+        'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId
       }),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
   }
 
+ 
   getReceiptDetail(receiptId: number) {
     const method = '/publicservice/findpublicservicereceiptdetailstring';
     return this.http.post(
       this.url + method,
       JSON.stringify({'publicServiceReceiptId': receiptId}),
+      { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+    );
+  }
+
+
+  sendBillPDF(consecutiveNumber) {
+    const method = '/getbillbyconsecutive';
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({'consecutiveNumber': consecutiveNumber}),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
   }
@@ -85,14 +101,13 @@ getPayMethod(){
 
 
 
-getBillFilter(accountNumber) {
+getBillFilter(accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
   const method = '/getbillfilter';
   return this.http.post(
     this.url + method,
     JSON.stringify({
-      'numact': accountNumber, 'identification': null, 'date1': null, 'date2': null,
-      'catera': null, 'state': null, 'medpay': null, 'salecondition': null, 'emidate': null, 'amount': null, 'amount2': null,
-      'doctype': null,
+      'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
+      'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId
     }),
     { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
   );

@@ -19,5 +19,5 @@ this.publicServiceReceiptDetails = this.receiptDetail.data.Detalle;
 
 
 export interface DialogData {
-  data: any;
+  data: {Detalle:any};
 }

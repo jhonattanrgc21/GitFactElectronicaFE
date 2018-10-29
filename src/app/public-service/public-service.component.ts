@@ -27,7 +27,12 @@ export class PublicServiceComponent implements OnInit {
   isCrdLengthCorrect = 'true';
   isLoadingResults = false;
   
-
+  @Input() selectedState: any;
+  @Input() selectedPaymethod: any;
+  @Input() selectedSalecondition: any;
+  @Input() selectedCartera: any;
+  @Input() selectedDoctype: any;
+  
 
   state: String;
   paymethod: String;
@@ -93,6 +98,7 @@ export class PublicServiceComponent implements OnInit {
   }
 
   checkArgs() {
+    console.log("entre checkArgs");
     if (this.accountNumber == null) {
       this.accountNumber = '';
     }
@@ -228,10 +234,10 @@ getBillsFilter(){
         this.changeDetectorRefs.detectChanges();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-}
+      }
 
     } );
-  }
+}
 
 
   ngOnInit() {
@@ -284,6 +290,7 @@ getBillsFilter(){
     }else{
       this.identification = this.identification;
     }
+
     if (this.dateFrom === '') {
       this.dateFrom = null;
     }else{
@@ -390,5 +397,4 @@ export interface PublicServiceReceipts {
   estado: string;
   detalle: string;
 }
-
 
