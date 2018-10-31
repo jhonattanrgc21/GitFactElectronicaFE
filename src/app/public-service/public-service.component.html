@@ -66,7 +66,7 @@
           <img class="vertical-line" src="../assets/img/vertical-line.png">
           <div class="filter-input">
               <mat-form-field class="input-medium">
-                  <mat-select placeholder="Estado" [formControl]="states" [(value)]="selectedState">
+                  <mat-select placeholder="Estado" [formControl]="state" [(value)]="selectedState">
                       <mat-option *ngFor="let state of stateList" [value]="state" (click)="checkArgs()">{{state[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
@@ -77,7 +77,7 @@
           <div align="center">
           <div class="filter-input">
               <mat-form-field class="input-medium">
-                  <mat-select placeholder="Medio de pago" [formControl]="paymethods" [(value)]="selectedPaymethod">
+                  <mat-select placeholder="Medio de pago" [formControl]="paymethod" [(value)]="selectedPaymethod">
                       <mat-option *ngFor="let paymethod of payMethodList" [value]="paymethod" (click)="checkArgs()">{{paymethod[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
