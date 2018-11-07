@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 import { PublicServiceReceiptDetailModalComponent } from '../public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
@@ -8,7 +9,7 @@ import { MatConfirmComponent } from '../mat-confirm/mat-confirm.component';
   providedIn: 'root'
 })
 export class PublicServiceServiceService {
-  url = 'http://localhost:8080/sib/api';
+  url = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
 
