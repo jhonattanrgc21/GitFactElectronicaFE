@@ -1,0 +1,15 @@
+.toolbar {
+    background-color: #e21616;
+}
+
+#logo{
+    width: 7%;
+    padding: 5px;
+}
+#header{
+    align-content: center;
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
