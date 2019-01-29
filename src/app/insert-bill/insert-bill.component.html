@@ -1,0 +1,110 @@
+<div class="bill-container">
+
+</div>
+
+<div id="section-container">
+  <div id="content">
+    <h2 id="main-header">Ingreso de Factura Electrónica</h2>
+    <hr class="style-one">
+    <br/>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <mat-label class="date-bill" >Fecha Documento: {{currentDate}}</mat-label><br/>
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Tipo de Documento" formControlName="selectedReferenceDocument" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceDocument.errors }">
+          <mat-option *ngFor="let referenceDocument of referenceDocumentList" [value]="referenceDocument[0]" (click)="checkArgs()">{{referenceDocument[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
+          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione un tipo de Documento</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Identificación Receptor</mat-label>
+        <input matInput formControlName="identification" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
+        
+      </mat-form-field>
+      <div *ngIf="submitted && f.identification.errors" class="has-error">
+          <div *ngIf="f.identification.errors.required">La identificación del receptor es requerida</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Número de Establecimiento</mat-label>
+        <input matInput formControlName="establishment" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.establishment.errors }">
+      </mat-form-field>
+      <div *ngIf="submitted && f.establishment.errors" class="has-error">
+          <div *ngIf="f.establishment.errors.minlength">Valide la longitud del número de establecimiento (15)</div>
+          <div *ngIf="f.establishment.errors.maxlength">Valide la longitud del número de establecimiento (15)</div>
+          <div *ngIf="f.establishment.errors.pattern">Este campo solo acepta valores numéricos</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Moneda Factura" formControlName="selectedCurrency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedCurrency.errors }">
+          <mat-option *ngFor="let currency of currencyList" [value]="currency[0]" (click)="checkArgs()">{{currency[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
+          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione una Moneda</div>
+      </div>
+
+      <p class="content-header">Ingrese los detalles de la factura</p>
+      <div class="border-table">
+        <div formArrayName="items">
+          <table class="table-insert">
+            <thead>
+              <tr class="table-insert">
+                <th>Linea</th>
+                <th>Cantidad</th>
+                <th>Detalle</th>
+                <th>Monto</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of myForm['controls'].items['controls']; let i=index" [formGroupName]="i">
+
+                <td>{{i+1}}</td>
+                <td>
+                  <div class="form-group">
+                    <input matInput placeholder="Ingrese la cantidad de unidades" formControlName="quantity" type="number">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input matInput placeholder="Ingrese el detalle de la linea" formControlName="detailDescription" type="text" maxlength="49">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input matInput placeholder="Ingrese el precio unitario" formControlName="unitPrice" type="number">
+                  </div>
+                </td>
+                <td>
+                  <a (click)="removeDetail(i)" style="cursor: default">
+                            <i class="material-icons">delete_forever</i>
+                          </a>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="margin-20">
+          <a (click)="addDetail()" style="cursor: default">
+            <i class="material-icons">add_circle</i>Agregar Detalle 
+          </a>
+        </div>
+      </div>
+      <br/>
+      <div *ngIf="submitted && f.items.errors" class="has-error">
+          <div *ngIf="f.items.errors.required">Verifique los detalles de las lineas de la factura</div>
+      </div>
+      
+
+      <div id="search-button">
+        <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Agregar Factura</button>
+      </div>
+    </form>
+  </div>
+</div>
