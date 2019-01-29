@@ -7,12 +7,13 @@ import { PublicServiceComponent } from './public-service/public-service.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
 import { ToolBarComponent } from './tool-bar/tool-bar.component';
-import { InsuranceComponent } from './insurance/insurance.component';
+import { InsertBillComponent } from './insert-bill/insert-bill.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // tslint:disable-next-line:max-line-length
 import { PublicServiceReceiptDetailModalComponent } from './public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
 import { MatConfirmComponent } from './mat-confirm/mat-confirm.component';
+import{InsertBillAlertDialog} from './insert-bill/insert-bill.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { MatConfirmComponent } from './mat-confirm/mat-confirm.component';
     SidebarComponent,
     PublicServiceComponent,
     ToolBarComponent,
-    InsuranceComponent,
+    InsertBillComponent,
     PublicServiceReceiptDetailModalComponent,
-    MatConfirmComponent
+    MatConfirmComponent,
+    InsertBillAlertDialog
   ],
-  entryComponents: [PublicServiceComponent, PublicServiceReceiptDetailModalComponent],
+  entryComponents: [PublicServiceComponent, PublicServiceReceiptDetailModalComponent,InsertBillAlertDialog],
   imports: [
     BrowserModule,
     AppRoutingModule,
