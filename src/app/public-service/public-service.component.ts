@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Input, OnChanges } from '@angular/core';
 import { PublicServiceServiceService } from '../services/public-service-service.service';
@@ -18,6 +18,8 @@ import { PublicServiceReceiptDetailModalComponent } from './modal/public-service
 export class PublicServiceComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  public myForm: FormGroup;
+  submitted = false;
 
 
   
@@ -27,11 +29,7 @@ export class PublicServiceComponent implements OnInit {
   isCrdLengthCorrect = 'true';
   isLoadingResults = false;
   
-  @Input() selectedState: any;
-  @Input() selectedPaymethod: any;
-  @Input() selectedSalecondition: any;
-  @Input() selectedCartera: any;
-  @Input() selectedDoctype: any;
+
   
 
   state: String;
@@ -42,13 +40,7 @@ export class PublicServiceComponent implements OnInit {
 
   receiptDetail: PublicServiceReceipts;
 
-  @Input() identification : String;
-  @Input() accountNumber = '';
-  @Input() dateFrom: String = '';
-  @Input() dateTo: String = '';
-  @Input() amountFrom: String;
-  @Input() amountTo: String;
-  @Input() publicService: String;
+
 
   docTypeList: any; 
   carteraList: any; 
@@ -60,22 +52,7 @@ export class PublicServiceComponent implements OnInit {
 
 
   constructor(private publicServiceService: PublicServiceServiceService, private dialog: MatDialog,
-    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService) {
-    this.accountNumber = '';
-    this.identification = '';
-    this.dateFrom = '';
-    this.dateTo = '';
-    this.amountFrom = '';
-    this.amountTo = '';
-    this.state = '';
-    this.paymethod = '';
-    this.salecondition = '';
-    this.doctype = '';
-    this.selectedState= '';
-    this.selectedPaymethod= '';
-    this.selectedSalecondition= '';
-    this.selectedCartera= '';
-    this.selectedDoctype= '';
+    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService,private _fb: FormBuilder) {
   }
 
   tableData: any;
@@ -84,7 +61,7 @@ export class PublicServiceComponent implements OnInit {
   publicServicesList: PublicServicesList[];
 
   displayedColumns: string[] = ['consecutiveNumber', 'billDate', 'identification', 'name',
-    'moneda', 'montoFinal', 'tipoPago','estado', 'reenvio', 'pdf'];
+    'email','moneda', 'montoFinal', 'tipoPago','estado', 'reenvio', 'pdf'];
 
 
     
@@ -99,24 +76,6 @@ export class PublicServiceComponent implements OnInit {
 
   checkArgs() {
     console.log("entre checkArgs");
-    if (this.accountNumber == null) {
-      this.accountNumber = '';
-    }
-    if (this.identification == null) {
-      this.identification = '';
-    }
-    if (this.dateFrom == null) {
-      this.dateFrom = '';
-    }
-    if (this.dateTo == null) {
-      this.dateTo = '';
-    }
-    if (this.amountFrom == null) {
-      this.amountFrom = '';
-    }
-    if (this.amountTo == null) {
-      this.amountTo = '';
-    }
     if (this.state == null) {
       this.state = '';
     }
@@ -132,24 +91,7 @@ export class PublicServiceComponent implements OnInit {
     if (this.doctype == null) {
       this.doctype = '';
     }
-
-    if ((this.accountNumber.length > 6)) {
-      this.isActLengthCorrect = 'true';
-    } else {
-      this.isActLengthCorrect = 'false';
-    }
-
-    if (!(
-      (this.accountNumber === '') && (this.identification === '')
-      && (!(this.dateFrom !== '' && this.dateTo !== ''))
-      && (!(this.amountFrom !== '' && this.amountTo !== ''))
-      && !!!this.selectedState[0] && !!!this.selectedDoctype[0] && !!!this.selectedCartera && !!!this.selectedPaymethod[0] && !!!this.selectedSalecondition[0]
-    )
-    ) {
-      this.validArgs = true;
-    } else {
-      this.validArgs = false;
-    }
+    this.validArgs = true;
   }
 
 
@@ -188,24 +130,7 @@ sendBillPDF(consecutiveNumber){
 
 
 getBillsFilter(){
-  if (this.accountNumber === '') {
-    this.accountNumber = null;
-  }
-  if (this.identification === '') {
-    this.identification = null;
-  }
-  if (this.dateFrom === '') {
-    this.dateFrom = null;
-  }
-  if (this.dateTo === '') {
-    this.dateTo = null;
-  }
-  if (this.amountFrom === '') {
-    this.amountFrom = null;
-  }
-  if (this.amountTo === '') {
-    this.amountTo = null;
-  }
+
   if (this.state === '') {
     this.state = null;
   }
@@ -221,8 +146,9 @@ getBillsFilter(){
   if (this.doctype === '') {
     this.doctype = null;
   }
-  this.publicServiceService.getBillFilter( this.accountNumber, this.identification, this.dateFrom,
-    this.dateTo, this.amountFrom, this.amountTo, this.state,this.paymethod,this.salecondition,this.cartera,this.doctype)
+  this.publicServiceService.getBillFilter( this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+    this.f.selectedCartera.value,this.f.selectedDoctype.value)
     .subscribe(data => {
       this.isLoadingResults = false;
       this.receiptsList = <DataPubServ>data;
@@ -239,6 +165,7 @@ getBillsFilter(){
     } );
 }
 
+get f() { return this.myForm.controls; }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -253,14 +180,29 @@ getBillsFilter(){
     this.getSaleCondition();
     this.getCartera();
     this.getDocType();
+    this.myForm = this._fb.group({
+      accountNumber:['',[Validators.minLength(7),Validators.pattern("^[0-9]*$")]],
+      identification:['',[Validators.minLength(9)]],
+      dateFrom:[''],
+      dateTo:[''],
+      amountFrom:[''],
+      amountTo:[''],
+      state:[''],
+      paymethod:[''],
+      salecondition:[''],
+      doctype:[''],
+      selectedState:[''],
+      selectedPaymethod:[''],
+      selectedSalecondition:[''],
+      selectedCartera:[''],
+      selectedDoctype:['']
+    });
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   searchByArgs() {
-    if (this.validArgs) {
-      this.getElectronicBillsByParams();
-    }
+    this.getElectronicBillsByParams();
   }
   openReceiptDetailModal(publicServiceReceiptId: number): void {
     this.publicServiceService.getReceiptDetail(publicServiceReceiptId).subscribe(
@@ -274,82 +216,23 @@ getBillsFilter(){
 
   }
 
+  onSubmit() {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.myForm.invalid) {
+            return;
+        }
+        this.getBillsFilter();
+    }
+
 
   getElectronicBillsByParams() {
     this.isLoadingResults = true;
 
 
-    if (this.accountNumber === '') {
-      this.accountNumber = null;
-    }else{
-      this.accountNumber = this.accountNumber;
-    }
-
-    if (this.identification === '') {
-      this.identification = null;
-    }else{
-      this.identification = this.identification;
-    }
-
-    if (this.dateFrom === '') {
-      this.dateFrom = null;
-    }else{
-      this.dateFrom = this.dateFrom;
-    }
-
-    if (this.dateTo === '') {
-      this.dateTo = null;
-    }else{
-      this.dateTo = this.dateTo;
-    }
-    
-    if (this.amountFrom === '') {
-      this.amountFrom = null;
-    }else{
-      this.amountFrom = this.amountFrom;
-    }
-
-    if (this.amountTo === '') {
-      this.amountTo = null;
-    }else{
-      this.amountTo = this.amountTo;
-    }
-
-    if (this.selectedState[0] === '') {
-      this.selectedState = null;
-    } else{
-      this.state = this.selectedState[0];
-    }
-
-    if (this.selectedPaymethod[0] === '') {
-      this.selectedPaymethod = null;
-    }
-    else{
-      this.paymethod = this.selectedPaymethod[0];
-    }
-
-    if (this.selectedSalecondition[0] === '') {
-      this.selectedSalecondition = null;
-    }else{
-      this.salecondition = this.selectedPaymethod[0];
-    }
-
-    if (this.selectedCartera === '') {
-      this.selectedCartera = null;
-    }else{
-      this.cartera = this.selectedCartera;
-    }
-
-    if (this.selectedDoctype[0] === '') {
-      this.selectedDoctype = null;
-    }else{
-      this.doctype = this.selectedDoctype[0];
-    }
-
-
-
-    this.publicServiceService.getPublicServiceReceiptsByParams(this.accountNumber, this.identification, this.dateFrom,
-      this.dateTo, this.amountFrom, this.amountTo, this.state,this.paymethod,this.salecondition,this.cartera,this.doctype)
+    this.publicServiceService.getPublicServiceReceiptsByParams(this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+    this.f.selectedCartera.value,this.f.selectedDoctype.value)
       .subscribe(data => {
         this.isLoadingResults = false;
         this.receiptsList = data;
@@ -396,5 +279,6 @@ export interface PublicServiceReceipts {
   tipoPago: string;
   estado: string;
   detalle: string;
+  email:string;
 }
 

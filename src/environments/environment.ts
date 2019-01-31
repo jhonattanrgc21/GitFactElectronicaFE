@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://micredix.org/sib/api',
+  apiUrl: 'http://localhost:8080/sib/api',
   defaultPmnId: 4,
   defaultNmtId: 2
 };
