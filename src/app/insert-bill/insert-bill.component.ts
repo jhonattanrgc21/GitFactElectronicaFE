@@ -86,9 +86,7 @@ export class InsertBillComponent implements OnInit {
         this.insertButton=true;
       } 
     }
-    );
-
-      
+    ); 
   }
 
 

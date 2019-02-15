@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef,Inject} from '@angular/core';
 import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Input, OnChanges } from '@angular/core';
@@ -6,9 +6,13 @@ import { PublicServiceServiceService } from '../services/public-service-service.
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 // tslint:disable-next-line:max-line-length
 import { PublicServiceReceiptDetailModalComponent } from './modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
+import {Router} from "@angular/router"
+
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser'
+
 
 @Component({
   selector: 'app-public-service',
@@ -49,10 +53,22 @@ export class PublicServiceComponent implements OnInit {
   saleConditionList: any;
   receiptsList: any;
   result: BillSent;
+  pdfResponse: any;
 
 
-  constructor(private publicServiceService: PublicServiceServiceService, private dialog: MatDialog,
+  constructor(private publicServiceService: PublicServiceServiceService, private dialog: MatDialog,private sanitizer: DomSanitizer,
     private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService,private _fb: FormBuilder) {
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PDFBillDialog, {
+      width: '80%',
+      data: {pdf: this.sanitizer.bypassSecurityTrustResourceUrl("data:application/pdf;base64,"+this.pdfResponse.pdfData)},
+      height:"80%"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   tableData: any;
@@ -164,6 +180,18 @@ getBillsFilter(){
 
     } );
 }
+
+getPdfBill(consecutiveNumber){
+  this.publicServiceService.getPDF(consecutiveNumber).subscribe(data => 
+    {
+     this.pdfResponse = data;
+      if(this.pdfResponse != null && this.pdfResponse.pdfData!=null){
+        this.openDialog();
+     } else{
+      this.openSnackBar('No se encontró el PDF solicitado','');
+     } 
+    });
+  }
 
 get f() { return this.myForm.controls; }
 
@@ -280,5 +308,25 @@ export interface PublicServiceReceipts {
   estado: string;
   detalle: string;
   email:string;
+}
+
+@Component({
+  selector: 'public-service-pdf-dialog',
+  templateUrl: 'public-service-pdf-dialog.html',
+})
+export class PDFBillDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<PDFBillDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private router: Router,private sanitizer: DomSanitizer) {}
+
+  okClick(): void {
+      this.dialogRef.close();   
+  }
+
+}
+
+export interface DialogData {
+  pdf: any;
 }
 

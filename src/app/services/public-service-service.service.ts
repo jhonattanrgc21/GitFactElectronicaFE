@@ -114,6 +114,15 @@ getBillFilter(accountNumber,identification, dateFrom, dateTo, amountFrom, amount
   );
 }
 
+getPDF(consecutiveNumber) {
+    const method = '/pdfBill';
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({'consecutiveNumber': consecutiveNumber}),
+      { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+    );
+  }
+
 
 
 

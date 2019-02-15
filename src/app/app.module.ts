@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { PublicServiceReceiptDetailModalComponent } from './public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component';
 import { MatConfirmComponent } from './mat-confirm/mat-confirm.component';
 import{InsertBillAlertDialog} from './insert-bill/insert-bill.component';
+import{PDFBillDialog} from './public-service/public-service.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,10 @@ import{InsertBillAlertDialog} from './insert-bill/insert-bill.component';
     InsertBillComponent,
     PublicServiceReceiptDetailModalComponent,
     MatConfirmComponent,
-    InsertBillAlertDialog
+    InsertBillAlertDialog,
+    PDFBillDialog
   ],
-  entryComponents: [PublicServiceComponent, PublicServiceReceiptDetailModalComponent,InsertBillAlertDialog],
+  entryComponents: [PublicServiceComponent, PublicServiceReceiptDetailModalComponent,InsertBillAlertDialog,PDFBillDialog],
   imports: [
     BrowserModule,
     AppRoutingModule,
