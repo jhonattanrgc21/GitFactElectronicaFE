@@ -57,7 +57,7 @@ export class PublicServiceComponent implements OnInit {
 
 
   constructor(private publicServiceService: PublicServiceServiceService, private dialog: MatDialog,private sanitizer: DomSanitizer,
-    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService,private _fb: FormBuilder) {
+    private changeDetectorRefs: ChangeDetectorRef, public snackBar: MatSnackBar, dialogService:PublicServiceServiceService,private _fb: FormBuilder, private router: Router) {
   }
 
   openDialog(): void {
@@ -77,7 +77,7 @@ export class PublicServiceComponent implements OnInit {
   publicServicesList: PublicServicesList[];
 
   displayedColumns: string[] = ['consecutiveNumber', 'billDate', 'identification', 'name',
-    'email','moneda', 'montoFinal', 'tipoPago','estado', 'reenvio', 'pdf'];
+    'email','moneda', 'montoFinal', 'tipoPago','estado','acciones'];
 
 
     
@@ -191,6 +191,10 @@ getPdfBill(consecutiveNumber){
       this.openSnackBar('No se encontró el PDF solicitado','');
      } 
     });
+  }
+
+  generateCreditNote(consecutiveNumber){
+    this.router.navigate(['creditNote',consecutiveNumber]);
   }
 
 get f() { return this.myForm.controls; }
