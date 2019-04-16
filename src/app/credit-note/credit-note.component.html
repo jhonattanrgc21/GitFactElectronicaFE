@@ -1,0 +1,114 @@
+<div class="bill-container">
+
+</div>
+
+<div id="section-container">
+  <div id="content">
+    <h2 id="main-header">Generar Nota de Crédito</h2>
+    <hr class="style-one">
+    <br/>
+    <mat-label class="date-bill" >Fecha Nota Crédito: {{currentDate}}</mat-label><br/>
+      <mat-label class="date-bill" >Tipo de Documento: {{documentTypeDescription}}</mat-label><br/>
+      <mat-label class="date-bill" >Fecha Emisión de Documento: {{emissionDocumentDate}}</mat-label><br/>
+      <mat-label class="date-bill" >Moneda Documento: {{currencyDescription}}</mat-label><br/>
+      <mat-label class="date-bill" >Identificación del Receptor: {{receiverIdentification}}</mat-label><br/>
+      <mat-label class="date-bill" >Nombre del Receptor: {{receiverName}}</mat-label><br/>
+
+          <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="quantity">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+                  <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="detailDescription">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalle </th>
+                  <td mat-cell *matCellDef="let element"> {{element.detailDescription}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="unitPrice">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
+                  <td mat-cell *matCellDef="let element"> {{element.unitPrice}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let detailsRows; columns: displayedColumns;"></tr>
+          </table>
+          <br/>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="insert-input">
+              <mat-select placeholder="Código Referencia" formControlName="selectedReferenceCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceCode.errors }">
+                <mat-option *ngFor="let referenceCode of referenceCodeList" [value]="referenceCode[0]">{{referenceCode[1]}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="submitted && f.selectedReferenceCode.errors" class="has-error">
+              <div *ngIf="f.selectedReferenceCode.errors.required">Seleccione una código de referencia</div>
+          </div>
+            <br/>
+            <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Generar Nota</button>
+          </form>
+      
+
+    <!--<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Tipo de Documento" formControlName="selectedReferenceDocument" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceDocument.errors }">
+          <mat-option *ngFor="let referenceDocument of referenceDocumentList" [value]="referenceDocument[0]" (click)="checkArgs()">{{referenceDocument[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
+          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione un tipo de Documento</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Identificación Receptor</mat-label>
+        <input matInput formControlName="identification" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
+        
+      </mat-form-field>
+      <div *ngIf="submitted && f.identification.errors" class="has-error">
+          <div *ngIf="f.identification.errors.required">La identificación del receptor es requerida</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Número de Establecimiento</mat-label>
+        <input matInput formControlName="establishment" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.establishment.errors }">
+      </mat-form-field>
+      <div *ngIf="submitted && f.establishment.errors" class="has-error">
+          <div *ngIf="f.establishment.errors.minlength">Valide la longitud del número de establecimiento (15)</div>
+          <div *ngIf="f.establishment.errors.maxlength">Valide la longitud del número de establecimiento (15)</div>
+          <div *ngIf="f.establishment.errors.pattern">Este campo solo acepta valores numéricos</div>
+      </div>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Moneda Factura" formControlName="selectedCurrency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedCurrency.errors }">
+          <mat-option *ngFor="let currency of currencyList" [value]="currency[0]" (click)="checkArgs()">{{currency[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
+          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione una Moneda</div>
+      </div>
+
+      <p class="content-header">Ingrese los detalles de la factura</p>
+      <div class="border-table">
+        
+
+
+        <div class="margin-20">
+          <a (click)="addDetail()" style="cursor: default">
+            <i class="material-icons">add_circle</i>Agregar Detalle 
+          </a>
+        </div>
+      </div>
+      <br/>
+      <div *ngIf="submitted && f.items.errors" class="has-error">
+          <div *ngIf="f.items.errors.required">Verifique los detalles de las lineas de la factura</div>
+      </div>
+      
+
+      <div id="search-button">
+        <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Agregar Factura</button>
+      </div>
+    </form>
+    -->
+  </div>
+</div>

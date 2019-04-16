@@ -198,20 +198,15 @@
 
 
              <!-- Symbol Column -->
-          <ng-container matColumnDef="reenvio">
-             <th mat-header-cell *matHeaderCellDef mat-sort-header> Reenvio </th>
-             <td mat-cell *matCellDef="let row">
-                 <button (click)="sendBillPDF(row.consecutiveNumber)"  mat-raised-button color="primary" class="credix-theme">Reenvio</button>
-             </td>
 
-             
-           </ng-container>
             
             <!-- Symbol Column -->
-            <ng-container matColumnDef="pdf">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> PDF </th>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                 <td mat-cell *matCellDef="let row">
-                    <button (click)="getPdfBill(row.consecutiveNumber)" mat-raised-button color="primary" class="credix-theme">PDF</button>
+                    <button (click)="getPdfBill(row.consecutiveNumber)" class="buttonAction" matTooltip="Ver PDF" ><mat-icon>search</mat-icon></button>
+                    <button (click)="sendBillPDF(row.consecutiveNumber)" class="buttonAction" matTooltip="Reenvio"><mat-icon>send</mat-icon></button>
+                    <button (click)="generateCreditNote(row.consecutiveNumber)" class="buttonAction" matTooltip="Generar Nota Crédito"><mat-icon>block</mat-icon></button>
                 </td>
 
                 
