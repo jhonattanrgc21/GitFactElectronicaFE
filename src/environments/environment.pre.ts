@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://micredix.net/sib/api',
   defaultPmnId: 4,
-  defaultNmtId: 2
+  defaultNmtId: 3
 };
 
 /*

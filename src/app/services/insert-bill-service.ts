@@ -69,4 +69,13 @@ insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocum
     );
   }
 
+  getMeasureList(){
+  const method = '/unitslist';
+  return this.http.post(
+    this.url + method,
+    JSON.stringify({}),
+    { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+  );
+}
+
 }
