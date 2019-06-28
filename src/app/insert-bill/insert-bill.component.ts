@@ -29,6 +29,7 @@ export class InsertBillComponent implements OnInit {
   referenceDocumentList: any;
   currencyList: any;
   insertResponse: any;
+  measureList: any;
 
 
 
@@ -74,9 +75,14 @@ export class InsertBillComponent implements OnInit {
   getCurrency() {
     this.insertBillService.getCurrency().subscribe(data => { this.currencyList = data });
   }
+  getMeasureList(){
+    this.insertBillService.getMeasureList().subscribe(data => { this.measureList = data });
+    
+  }
 
   insertBill(){
     this.insertButton=false;
+
     this.insertBillService.insertyBill(this.f.selectedCurrency.value,this.f.identification.value,this.f.establishment.value,
     this.f.selectedReferenceDocument.value,this.f.billDate.value,this.f.items.value)
     .subscribe(data => { 
@@ -111,13 +117,16 @@ export class InsertBillComponent implements OnInit {
     this.currencyList = '';
     this.getReferenceDocument();
     this.getCurrency();
+    this.getMeasureList();
   }
 
   initDetails() {
     return this._fb.group({
       quantity: ['', Validators.required],
       detailDescription: ['', Validators.required],
-      unitPrice: ['', Validators.required]
+      unitPrice: ['', Validators.required],
+      measure:['',Validators.required],
+      taxed: [false]
     });
   }
 

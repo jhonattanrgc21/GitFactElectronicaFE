@@ -54,8 +54,10 @@
               <tr class="table-insert">
                 <th>Linea</th>
                 <th>Cantidad</th>
+                <th>Medida</th>
                 <th>Detalle</th>
                 <th>Monto</th>
+                <th>IVA 13%</th>
                 <th></th>
               </tr>
             </thead>
@@ -70,12 +72,24 @@
                 </td>
                 <td>
                   <div class="form-group">
+                    <mat-select placeholder="Medida" formControlName="measure" class="form-control">
+                      <mat-option *ngFor="let measureItem of measureList" [value]="measureItem[0]">{{measureItem[1]}}</mat-option>
+                    </mat-select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
                     <input matInput placeholder="Ingrese el detalle de la linea" formControlName="detailDescription" type="text" maxlength="49">
                   </div>
                 </td>
                 <td>
                   <div class="form-group">
                     <input matInput placeholder="Ingrese el precio unitario" formControlName="unitPrice" type="number">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <mat-checkbox formControlName="taxed"></mat-checkbox>
                   </div>
                 </td>
                 <td>
