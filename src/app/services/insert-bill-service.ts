@@ -29,6 +29,15 @@ getCurrency(){
   );
 }
 
+getReferenceCode(){
+  const method = '/referencecodelist';
+  return this.http.post(
+    this.url + method,
+    JSON.stringify({}),
+    { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+  );
+}
+
 insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocument,billDate,details) {
   
     const method = '/insertbill';
@@ -39,5 +48,34 @@ insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocum
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
   }
+
+  insertCreditNote(currencyId,receiverIdentification,establishmentNumber,referenceDocument,billDate,details,referenceCode,consecutiveNumber) {
+  
+    const method = '/insertbill';
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({'crcId': currencyId,'rcvIdentification':receiverIdentification,'esbId':establishmentNumber,'referenceDocumentId':referenceDocument,
+      'bill_date':billDate,'pmnId':this.pmnId,'nmtId':this.nmtId,'dtlsarray':details, 'referenceCode':referenceCode,'consecutive':consecutiveNumber}),
+      { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+    );
+  }
+
+  getCreditNoteData(consecutiveNumber){
+    const method = '/getBillDetails';
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({'consecutiveNumber': consecutiveNumber}),
+      { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+    );
+  }
+
+  getMeasureList(){
+  const method = '/unitslist';
+  return this.http.post(
+    this.url + method,
+    JSON.stringify({}),
+    { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+  );
+}
 
 }

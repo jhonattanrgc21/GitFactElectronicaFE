@@ -5,6 +5,7 @@ body, html { height: 90%; }
   margin: auto;
   position: relative;
   overflow: hidden;
+  
 
 }
 .inner {
@@ -14,6 +15,7 @@ body, html { height: 90%; }
   background: grey;
   top: 30%;
    background-image: linear-gradient(to top, rgb(255, 255, 255), rgba(221, 27, 27, 0.973), rgb(255, 255, 255));
+
 }
 #section-container {
     margin-top: 2%;
@@ -26,19 +28,21 @@ body, html { height: 90%; }
 }
 #content {
     padding: 2%;
+    display: flex;
+    flex-direction: column;
 }
 #main-header{
-    text-align: center;
+    text-align: left;
 }
 hr.style-one {
     border: 0;
-    width: 25%;
+    width: 100%;
     height: 2px;
     background: white;
     background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(221, 27, 27, 0.973), rgb(255, 255, 255));
 }
 .content-header{
-    text-align: center;
+    text-align: left;
 }
 
 #filters-container{
@@ -139,16 +143,26 @@ input[type="date"]::-webkit-input-placeholder{
     background: rgb(184, 17, 17);
   }
 
-  .buttonAction {
-    background-color: #f44336; 
-    color:white;
-    border: solid white 2px;
-    display: inline-block;
-    border-radius: 10%;
+  .insert-input{
+      width: 50%;
+  }
+  .table-insert{
+        text-align:center; 
+  }
+  .border-table{
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+  }
+
+  .has-error  {
+    color: rgb(184, 17, 17);
+    font-size: 14px;
+    padding-left: 1%;
 }
 
-.buttonAction:hover {
-  background-color: white; 
-  color: #f44336;
-  border: 1px solid red;
+.date-bill{
+    padding-left: 1%;
+    font-size: 14px;
+    color: grey;
 }
