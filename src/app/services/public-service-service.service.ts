@@ -20,7 +20,7 @@ export class PublicServiceServiceService {
       JSON.stringify({
         'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
         'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId,
-        'connum':consecutiveNumber
+        'consecutiveNumber':consecutiveNumber
       }),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
@@ -110,7 +110,7 @@ getBillFilter(consecutiveNumber,accountNumber,identification, dateFrom, dateTo, 
     JSON.stringify({
       'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
       'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId,
-      'connum': consecutiveNumber
+      'consecutiveNumber': consecutiveNumber
     }),
     { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
   );
