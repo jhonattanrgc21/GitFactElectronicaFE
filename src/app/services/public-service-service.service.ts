@@ -13,13 +13,14 @@ export class PublicServiceServiceService {
   constructor(private http: HttpClient) { }
 
 
-  getPublicServiceReceiptsByParams(accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
+  getPublicServiceReceiptsByParams(consecutiveNumber,accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
     const method = '/getbillfilter';
     return this.http.post(
       this.url + method,
       JSON.stringify({
         'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
-        'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId
+        'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId,
+        'connum':consecutiveNumber
       }),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
@@ -102,13 +103,14 @@ getPayMethod(){
 
 
 
-getBillFilter(accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
+getBillFilter(consecutiveNumber,accountNumber,identification, dateFrom, dateTo, amountFrom, amountTo, stateId, paymethodId,saleconditionId,carteraId,doctypeId) {
   const method = '/getbillfilter';
   return this.http.post(
     this.url + method,
     JSON.stringify({
       'numact': accountNumber, 'identification': identification, 'date1': dateFrom, 'date2': dateTo,
-      'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId
+      'catera': carteraId, 'state': stateId, 'medpay': paymethodId, 'salecondition': saleconditionId, 'amount': amountFrom, 'amount2': amountTo, 'doctype': doctypeId,
+      'connum': consecutiveNumber
     }),
     { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
   );
