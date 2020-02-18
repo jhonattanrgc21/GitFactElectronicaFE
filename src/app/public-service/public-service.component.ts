@@ -165,7 +165,7 @@ getBillsFilter(){
     this.doctype = null;
   }
   this.publicServiceService.getBillFilter( this.f.consecutiveNumber.value, this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
-    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.selectedSalecondition.value,
     this.f.selectedCartera.value,this.f.selectedDoctype.value)
     .subscribe(data => {
       this.isLoadingResults = false;
@@ -266,7 +266,7 @@ get f() { return this.myForm.controls; }
 
 
     this.publicServiceService.getPublicServiceReceiptsByParams(this.f.consecutiveNumber.value, this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
-    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.selectedSalecondition.value,
     this.f.selectedCartera.value,this.f.selectedDoctype.value)
       .subscribe(data => {
         this.isLoadingResults = false;
