@@ -170,7 +170,7 @@ getBillsFilter(){
     .subscribe(data => {
       this.isLoadingResults = false;
       this.receiptsList = <DataPubServ>data;
-      if (this.receiptsList.isEmpty === true || data.length === 0) {
+      if (this.receiptsList.isEmpty === true || data.toString() === "") {
         this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
       } else {
         this.tableData = this.receiptsList;
@@ -271,7 +271,7 @@ get f() { return this.myForm.controls; }
       .subscribe(data => {
         this.isLoadingResults = false;
         this.receiptsList = data;
-        if (this.receiptsList.isEmpty === true || data.length === 0) {
+        if (this.receiptsList.isEmpty === true || data.toString() === "") {
           this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
         } else {
           this.tableData = this.receiptsList;
