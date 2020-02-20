@@ -172,13 +172,13 @@ getBillsFilter(){
       this.receiptsList = <DataPubServ>data;
       if (this.receiptsList.isEmpty === true || data.toString() === "") {
         this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
-      } else {
-        this.tableData = this.receiptsList;
-        this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
-        this.changeDetectorRefs.detectChanges();
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
+      this.tableData = this.receiptsList;
+      this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
+      this.changeDetectorRefs.detectChanges();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      
 
     } );
 }
@@ -273,13 +273,12 @@ get f() { return this.myForm.controls; }
         this.receiptsList = data;
         if (this.receiptsList.isEmpty === true || data.toString() === "") {
           this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
-        } else {
-          this.tableData = this.receiptsList;
-          this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
-          this.changeDetectorRefs.detectChanges();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
         }
+        this.tableData = this.receiptsList;
+        this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
+        this.changeDetectorRefs.detectChanges();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
       }
       );
