@@ -57,7 +57,10 @@ hr.style-one {
     width:150px !important;
 }
 .input-medium{
-    width:175px !important;
+  width:175px !important;
+}
+.input-long{
+  width:200px !important;
 }
 #search-button{
     margin: auto;

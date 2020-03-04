@@ -5,6 +5,7 @@
       <p class="content-header">Ingrese el o los filtros a aplicar en la búsqueda</p>
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div id="filters-container">
+        <div align="center">
           <div class="filter-input">
               <p>
                   <mat-form-field appearance="standard" class="input-medium">
@@ -28,6 +29,18 @@
                       <mat-error *ngIf="isCrdLengthCorrect=='false'">El número Identificacion debe tener 9 dígitos min</mat-error>
                   </mat-form-field>
               </p>
+          </div>
+          <img class="vertical-line" src="../assets/img/vertical-line.png">
+          <div class="filter-input">
+            <p>
+                <mat-form-field appearance="standard" class="input-long">
+                    <mat-label>Número de consecutivo</mat-label>
+                    <input matInput placeholder="Ingresa el número de consecutivo" class="form-control" formControlName="consecutiveNumber" [ngClass]="{ 'is-invalid': submitted && f.consecutiveNumber.errors }" (keyup.enter)="searchByArgs()">
+                    <mat-icon matSuffix>receipt</mat-icon>
+                    <mat-hint>Longitud: 20 caracteres</mat-hint>
+                    <mat-error *ngIf="isActLengthCorrect=='false'">El número de consecutivo debe tener 20 caracteres</mat-error>
+                </mat-form-field>
+            </p>
           </div>
           <img class="vertical-line" src="../assets/img/vertical-line.png">
           <div class="filter-input">
@@ -66,17 +79,17 @@
           <div class="filter-input">
               <mat-form-field class="input-medium">
                   <mat-select placeholder="Estado" formControlName="selectedState" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedState.errors }">
+                      <mat-option>Seleccione una opción</mat-option>
                       <mat-option *ngFor="let state of stateList" [value]="state[0]" (click)="checkArgs()">{{state[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
               </mat-form-field>
           </div>
-
-
-          <div align="center">
+          <img class="vertical-line" src="../assets/img/vertical-line.png">
           <div class="filter-input">
               <mat-form-field class="input-medium">
                   <mat-select placeholder="Medio de pago" formControlName="selectedPaymethod" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedPaymethod.errors }">
+                      <mat-option>Seleccione una opción</mat-option>
                       <mat-option *ngFor="let paymethod of payMethodList" [value]="paymethod[0]" (click)="checkArgs()">{{paymethod[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
@@ -86,6 +99,7 @@
           <div class="filter-input">
               <mat-form-field class="input-medium">
                   <mat-select placeholder="Condición de venta" formControlName="selectedSalecondition" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedSalecondition.errors }">
+                      <mat-option>Seleccione una opción</mat-option>
                       <mat-option *ngFor="let salecondition of saleConditionList" [value]="salecondition[0]" (click)="checkArgs()">{{salecondition[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
@@ -95,6 +109,7 @@
           <div class="filter-input">
               <mat-form-field class="input-medium">
                   <mat-select placeholder="Cartera" formControlName="selectedCartera" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedCartera.errors }">
+                      <mat-option>Seleccione una opción</mat-option>
                       <mat-option *ngFor="let cartera of carteraList" [value]="cartera" (click)="checkArgs()">{{cartera}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
@@ -104,12 +119,13 @@
           <div class="filter-input">
               <mat-form-field class="input-medium">
                   <mat-select placeholder="Tipo de documento" formControlName="selectedDoctype" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedDoctype.errors }">
+                      <mat-option>Seleccione una opción</mat-option>
                       <mat-option *ngFor="let doctype of docTypeList" [value]="doctype[0]" (click)="checkArgs()">{{doctype[1]}}</mat-option>
                   </mat-select>
                   <mat-hint></mat-hint>
               </mat-form-field>
           </div>
-        </div>
+        </div><!--fin de align-->
           
 
 

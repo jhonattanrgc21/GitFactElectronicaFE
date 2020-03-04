@@ -147,6 +147,8 @@ sendBillPDF(consecutiveNumber){
 
 getBillsFilter(){
 
+  this.isLoadingResults = true;
+
   if (this.state === '') {
     this.state = null;
   }
@@ -162,21 +164,21 @@ getBillsFilter(){
   if (this.doctype === '') {
     this.doctype = null;
   }
-  this.publicServiceService.getBillFilter( this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
-    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+  this.publicServiceService.getBillFilter( this.f.consecutiveNumber.value, this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.selectedSalecondition.value,
     this.f.selectedCartera.value,this.f.selectedDoctype.value)
     .subscribe(data => {
       this.isLoadingResults = false;
       this.receiptsList = <DataPubServ>data;
-      if (this.receiptsList.isEmpty === true) {
+      if (this.receiptsList.isEmpty === true || data.toString() === "") {
         this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
-      } else {
-        this.tableData = this.receiptsList;
-        this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
-        this.changeDetectorRefs.detectChanges();
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
+      this.tableData = this.receiptsList;
+      this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
+      this.changeDetectorRefs.detectChanges();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      
 
     } );
 }
@@ -215,6 +217,7 @@ get f() { return this.myForm.controls; }
     this.myForm = this._fb.group({
       accountNumber:['',[Validators.minLength(7),Validators.pattern("^[0-9]*$")]],
       identification:['',[Validators.minLength(9)]],
+      consecutiveNumber:['', [Validators.minLength(20), Validators.maxLength(20)]],
       dateFrom:[''],
       dateTo:[''],
       amountFrom:[''],
@@ -262,21 +265,20 @@ get f() { return this.myForm.controls; }
     this.isLoadingResults = true;
 
 
-    this.publicServiceService.getPublicServiceReceiptsByParams(this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
-    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.salecondition.value,
+    this.publicServiceService.getPublicServiceReceiptsByParams(this.f.consecutiveNumber.value, this.f.accountNumber.value, this.f.identification.value, this.f.dateFrom.value,
+    this.f.dateTo.value,this.f.amountFrom.value,this.f.amountTo.value, this.f.selectedState.value,this.f.selectedPaymethod.value,this.f.selectedSalecondition.value,
     this.f.selectedCartera.value,this.f.selectedDoctype.value)
       .subscribe(data => {
         this.isLoadingResults = false;
         this.receiptsList = data;
-        if (this.receiptsList.isEmpty === true) {
+        if (this.receiptsList.isEmpty === true || data.toString() === "") {
           this.openSnackBar('No se encontraron datos', 'Revisa los filtros insertados');
-        } else {
-          this.tableData = this.receiptsList;
-          this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
-          this.changeDetectorRefs.detectChanges();
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
         }
+        this.tableData = this.receiptsList;
+        this.dataSource = new MatTableDataSource<PublicServiceReceipts>(this.tableData);
+        this.changeDetectorRefs.detectChanges();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
       }
       );
