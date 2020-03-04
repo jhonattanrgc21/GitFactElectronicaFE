@@ -4,7 +4,7 @@ pipeline {
         stage('Node-Install') {
         	agent {
 		        docker {
-		            image 'node:lts-slim'
+		            image 'node:10.19.0-alpine3.9'
 		        }
 		    }
             steps {
