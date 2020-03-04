@@ -11,7 +11,7 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Node-Install') {
+        stage('Ng-Build') {
         	agent {
 		        docker {
 		            image 'node:10.19.0-alpine3.9'
