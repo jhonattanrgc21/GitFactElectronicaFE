@@ -18,6 +18,7 @@ pipeline {
 		        }
 		    }
             steps {
+                sh 'npm install -g @angular/cli@7.3.6'
                 sh 'ng build --configuration=qa --aot'
             }
         }
