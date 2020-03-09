@@ -22,5 +22,24 @@ pipeline {
                 sh 'ng build --configuration=' + "${environment}" + ' --aot'
             }
         }
+        stage('Deploy-App') {
+            agent any
+            steps {
+                script {
+                    if( autoDeploy == "true" )  {
+                        withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'keyfile', usernameVariable: 'username')]) {
+                            sh "ssh -i ${keyfile} ${username}@${sftpDestServer} \
+                            'cd /var/www/facturaElectronicaFE && \
+                            rm -f /var/www/facturaElectronicaFE/*'"
+                        }
+                    }
+                    if( autoDeploy == "true" )  {
+                        withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'keyfile', usernameVariable: 'username')]) {
+                            sh "scp -i ${keyfile} dist/* ${username}@${sftpDestServer}:/var/www/facturaElectronicaFE/"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
