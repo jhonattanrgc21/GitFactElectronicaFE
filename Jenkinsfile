@@ -35,7 +35,7 @@ pipeline {
                     }
                     if( autoDeploy == "true" )  {
                         withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'keyfile', usernameVariable: 'username')]) {
-                            sh "scp -ir ${keyfile} dist/* ${username}@${sftpDestServer}:/var/www/facturaElectronicaFE/"
+                            sh "scp -i ${keyfile} dist/* ${username}@${sftpDestServer}:/var/www/facturaElectronicaFE/"
                         }
                     }
                 }
