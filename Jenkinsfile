@@ -30,7 +30,7 @@ pipeline {
                         withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh', keyFileVariable: 'keyfile', usernameVariable: 'username')]) {
                             sh "ssh -i ${keyfile} ${username}@${sftpDestServer} \
                             'cd /var/www/facturaElectronicaFE && \
-                            rm -f /var/www/facturaElectronicaFE/*'"
+                            rm -fr /var/www/facturaElectronicaFE/*'"
                         }
                     }
                     if( autoDeploy == "true" )  {
