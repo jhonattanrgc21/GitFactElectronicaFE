@@ -39,7 +39,7 @@ getReferenceCode(){
 }
 
 insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocument,billDate,details) {
-  
+
     const method = '/insertbill';
     return this.http.post(
       this.url + method,
@@ -50,7 +50,7 @@ insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocum
   }
 
   insertCreditNote(currencyId,receiverIdentification,establishmentNumber,referenceDocument,billDate,details,referenceCode,consecutiveNumber) {
-  
+
     const method = '/insertbill';
     return this.http.post(
       this.url + method,
@@ -77,5 +77,13 @@ insertyBill(currencyId,receiverIdentification,establishmentNumber,referenceDocum
     { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
   );
 }
+  getServiceCodeList(){
+    const method = '/getallservicode';
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({}),
+      { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
+    );
+  }
 
 }

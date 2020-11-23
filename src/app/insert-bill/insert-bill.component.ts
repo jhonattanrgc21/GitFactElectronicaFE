@@ -30,7 +30,7 @@ export class InsertBillComponent implements OnInit {
   currencyList: any;
   insertResponse: any;
   measureList: any;
-
+  serviceCodeList: any;
 
 
 
@@ -77,22 +77,24 @@ export class InsertBillComponent implements OnInit {
   }
   getMeasureList(){
     this.insertBillService.getMeasureList().subscribe(data => { this.measureList = data });
-    
-  }
 
+  }
+  getAllServiceCode(){
+    this.insertBillService.getServiceCodeList().subscribe( data => {this.serviceCodeList = data });
+  }
   insertBill(){
     this.insertButton=false;
 
     this.insertBillService.insertyBill(this.f.selectedCurrency.value,this.f.identification.value,this.f.establishment.value,
     this.f.selectedReferenceDocument.value,this.f.billDate.value,this.f.items.value)
-    .subscribe(data => { 
+    .subscribe(data => {
       this.insertResponse = data;
       this.openDialog();
       if(this.insertResponse.type=="error"){
         this.insertButton=true;
-      } 
+      }
     }
-    ); 
+    );
   }
 
 
@@ -118,6 +120,7 @@ export class InsertBillComponent implements OnInit {
     this.getReferenceDocument();
     this.getCurrency();
     this.getMeasureList();
+    this.getAllServiceCode();
   }
 
   initDetails() {
@@ -126,6 +129,7 @@ export class InsertBillComponent implements OnInit {
       detailDescription: ['', Validators.required],
       unitPrice: ['', Validators.required],
       measure:['',Validators.required],
+      serviceCode:['',Validators.required],
       taxed: [false]
     });
   }
@@ -172,7 +176,7 @@ export class InsertBillAlertDialog {
       location.reload();
       this.dialogRef.close();
     }
-    
+
   }
 
 }
