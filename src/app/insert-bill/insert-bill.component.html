@@ -21,7 +21,7 @@
       <mat-form-field class="insert-input">
         <mat-label>Identificación Receptor</mat-label>
         <input matInput formControlName="identification" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
-        
+
       </mat-form-field>
       <div *ngIf="submitted && f.identification.errors" class="has-error">
           <div *ngIf="f.identification.errors.required">La identificación del receptor es requerida</div>
@@ -55,6 +55,7 @@
                 <th>Linea</th>
                 <th>Cantidad</th>
                 <th>Medida</th>
+                <th>Servicio</th>
                 <th>Detalle</th>
                 <th>Monto</th>
                 <th>IVA 13%</th>
@@ -74,6 +75,13 @@
                   <div class="form-group">
                     <mat-select placeholder="Medida" formControlName="measure" class="form-control">
                       <mat-option *ngFor="let measureItem of measureList" [value]="measureItem[0]">{{measureItem[1]}}</mat-option>
+                    </mat-select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <mat-select placeholder="Servicio" formControlName="serviceCode" class="form-control">
+                      <mat-option *ngFor="let serviceCodeItem of serviceCodeList" [value]="serviceCodeItem.sco_Id">{{serviceCodeItem.SCO_Name}}</mat-option>
                     </mat-select>
                   </div>
                 </td>
@@ -106,7 +114,7 @@
 
         <div class="margin-20">
           <a (click)="addDetail()" style="cursor: default">
-            <i class="material-icons">add_circle</i>Agregar Detalle 
+            <i class="material-icons">add_circle</i>Agregar Detalle
           </a>
         </div>
       </div>
@@ -114,7 +122,7 @@
       <div *ngIf="submitted && f.items.errors" class="has-error">
           <div *ngIf="f.items.errors.required">Verifique los detalles de las lineas de la factura</div>
       </div>
-      
+
 
       <div id="search-button">
         <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Agregar Factura</button>
