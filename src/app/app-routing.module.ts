@@ -6,13 +6,12 @@ import { UnAuthGuard } from "./core/auth/guards/un-auth.guard";
 const routes: Routes = [
   {
     path: "entry",
-    loadChildren: () =>
-      import("./entry/entry.module").then((m) => m.EntryModule),
+    loadChildren: "./entry/entry.module#EntryModule",
     canActivate: [UnAuthGuard],
   },
   {
     path: "",
-    loadChildren: () => import("./main/main.module").then((m) => m.MainModule),
+    loadChildren: "./main/main.module#MainModule",
     canActivate: [AuthGuard],
   },
   {
