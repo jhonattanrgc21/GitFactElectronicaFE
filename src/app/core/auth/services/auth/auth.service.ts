@@ -38,7 +38,9 @@ export class AuthService {
     return this.authLogoutErrorSubject.asObservable();
   }
 
-  public onLogin(userlogin: UserLogin): void {
+  public async onLogin(userlogin: UserLogin): Promise<void> {
+    const passwordDigested = await this.digestPassword(userlogin.password);
+    userlogin.password = passwordDigested
     this.http
       .post(`${this.loginUrl}/security/userlogin`, JSON.stringify(userlogin), {
         observe: "response",
@@ -99,4 +101,16 @@ export class AuthService {
   public getJwtData(): TokenData {
     return jwt_decode(this.geToken()) as TokenData;
   }
+
+  private async digestPassword(password: string): Promise<string> {
+    const msgUint8 = new TextEncoder().encode(password); 
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); 
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); 
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join(""); 
+    return hashHex;
+  }
+
+ 
 }
