@@ -1,15 +1,27 @@
 .toolbar {
-    background-color: #e21616;
+  background-color: #e21616;
 }
 
-#logo{
-    width: 7%;
-    padding: 5px;
+#logo {
+  width: 7%;
+  padding: 5px;
 }
-#header{
-    align-content: center;
+#header {
+  align-content: center;
 }
 .example-spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
 
+#logout {
+  align-content: center;
+  margin-top: 0.5%;
+}
+
+#logged-user {
+  align-content: center;
+}
+
+.iconButton:hover {
+  cursor: pointer;
+}

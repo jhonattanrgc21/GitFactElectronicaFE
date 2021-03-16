@@ -1,7 +1,23 @@
-<mat-toolbar color="primary" class="toolbar">
-    <mat-toolbar-row>
-      <img id="logo" src="../assets/img/credix-logo.png" alt="">
-      <span class="example-spacer"></span>
-      <span id="header">Factura Electronica</span>
-    </mat-toolbar-row>
+<mat-toolbar color="primary"
+  class="toolbar">
+  <mat-toolbar-row>
+    <img id="logo"
+      src="../assets/img/credix-logo.png"
+      alt="">
+    <span class="example-spacer"></span>
+    <span id="header">Factura Electrónica</span>
+    &nbsp;&nbsp;&nbsp;
+    <span id="logout">
+      <a>
+        <mat-icon aria-hidden="false"
+          aria-label="Cerrar sesion"
+          (click)="signOff()"
+          class="iconButton"> logout </mat-icon>
+      </a>
+    </span>
+    &nbsp;
+    <span id="logged-user"
+      (click)="signOff()"
+      class="iconButton">{{getUser()}}</span>
+  </mat-toolbar-row>
 </mat-toolbar>

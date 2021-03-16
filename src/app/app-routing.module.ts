@@ -1,31 +1,35 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PublicServiceComponent } from './public-service/public-service.component';
-import { InsertBillComponent } from './insert-bill/insert-bill.component';
-import { CreditNoteComponent } from './credit-note/credit-note.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "./core/auth/guards/auth.guard";
+import { UnAuthGuard } from "./core/auth/guards/un-auth.guard";
+
 const routes: Routes = [
-{
-path: '',
-component: PublicServiceComponent
-},
-{
-  path: 'insurance',
-  component: InsertBillComponent
-}
-,
-{
-  path: 'insertBill',
-  component: InsertBillComponent
-}
-,
-{
-  path: 'creditNote/:id',
-  component: CreditNoteComponent
-  }
+  {
+    path: "entry",
+    loadChildren: () =>
+      import("./entry/entry.module").then((m) => m.EntryModule),
+    canActivate: [UnAuthGuard],
+  },
+  {
+    path: "",
+    loadChildren: () => import("./main/main.module").then((m) => m.MainModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "",
+    redirectTo: "entry",
+    pathMatch: "full",
+    canActivate: [UnAuthGuard],
+  },
+  {
+    path: "**",
+    redirectTo: "",
+    pathMatch: "full",
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
