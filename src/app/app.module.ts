@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { PublicServiceComponent } from "./public-service/public-service.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -40,6 +41,7 @@ import { ResendEmailModalComponent } from "./public-service/modal/resend-email-m
     PDFBillDialog,
     CreditNoteAlertDialog,
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,6 +52,7 @@ import { ResendEmailModalComponent } from "./public-service/modal/resend-email-m
     HttpClientModule,
   ],
   providers: [],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
