@@ -2,7 +2,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { PublicServiceComponent } from "./public-service/public-service.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -15,7 +14,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { PublicServiceReceiptDetailModalComponent } from "./public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component";
 import { MatConfirmComponent } from "./mat-confirm/mat-confirm.component";
 import { InsertBillAlertDialog } from "./insert-bill/insert-bill.component";
-import { CreditNoteAlertDialog } from "./credit-note/credit-note.component";
+import { CreditNoteAlertDialog } from "./credit-note/credit-note-alert-dialog";
 import { PDFBillDialog } from "./public-service/public-service.component";
 import { ResendEmailModalComponent } from "./public-service/modal/resend-email-modal/resend-email-modal.component";
 
@@ -41,7 +40,6 @@ import { ResendEmailModalComponent } from "./public-service/modal/resend-email-m
     PDFBillDialog,
     CreditNoteAlertDialog,
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -52,7 +50,6 @@ import { ResendEmailModalComponent } from "./public-service/modal/resend-email-m
     HttpClientModule,
   ],
   providers: [],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {}

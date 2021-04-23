@@ -21,10 +21,11 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material";
+import { Subscription } from "rxjs";
+import { PublicServiceReceiptDetailModalComponent } from "./modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component";
 import { Router } from "@angular/router";
 
 import { DomSanitizer } from "@angular/platform-browser";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-public-service",
@@ -277,7 +278,6 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
           );
         }
         this.tableData = this.receiptsList;
-
         this.dataSource = new MatTableDataSource<PublicServiceReceipts>(
           this.tableData
         );
@@ -317,6 +317,13 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
       .getReceiptDetail(publicServiceReceiptId)
       .subscribe((data) => {
         this.receiptDetail = <PublicServiceReceipts>data;
+        const dialogRef = this.dialog.open(
+          PublicServiceReceiptDetailModalComponent,
+          {
+            width: "500px",
+            data: { data: this.receiptDetail },
+          }
+        );
       });
   }
 
@@ -408,7 +415,7 @@ export interface PublicServiceReceipts {
 export class PDFBillDialog {
   constructor(
     public dialogRef: MatDialogRef<PDFBillDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 
   okClick(): void {
