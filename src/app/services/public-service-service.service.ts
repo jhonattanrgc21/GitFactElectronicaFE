@@ -1,10 +1,7 @@
-
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../environments/environment";
-
 import { Observable, Subject } from "rxjs";
-
 @Injectable({
   providedIn: "root",
 })
@@ -12,10 +9,14 @@ export class PublicServiceServiceService {
   url = environment.apiUrl;
   private resendEmailSuccessSubject: Subject<boolean>;
   private resendEmailErrorSubject: Subject<boolean>;
+  private reprocessBillSuccessSubject: Subject<boolean>;
+  private reprocessBillErrorSubject: Subject<boolean>;
 
   constructor(private http: HttpClient) {
     this.resendEmailSuccessSubject = new Subject<boolean>();
     this.resendEmailErrorSubject = new Subject<boolean>();
+    this.reprocessBillSuccessSubject = new Subject<boolean>();
+    this.reprocessBillErrorSubject = new Subject<boolean>();
   }
 
   public get resendEmailSuccess$(): Observable<boolean> {
@@ -24,6 +25,14 @@ export class PublicServiceServiceService {
 
   public get resendEmailError$(): Observable<boolean> {
     return this.resendEmailErrorSubject.asObservable();
+  }
+
+  public get reprocessBillSuccess$(): Observable<boolean> {
+    return this.reprocessBillSuccessSubject.asObservable();
+  }
+
+  public get reprocessBillError$(): Observable<boolean> {
+    return this.reprocessBillErrorSubject.asObservable();
   }
 
   getPublicServiceReceiptsByParams(
@@ -96,6 +105,19 @@ export class PublicServiceServiceService {
           this.resendEmailErrorSubject.next(true);
         }
       });
+    }
+    
+  sendBillPDF(consecutiveNumber) {
+    const method = "/getbillbyconsecutive";
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({ consecutiveNumber: consecutiveNumber }),
+      {
+        headers: new HttpHeaders()
+          .set("Content-Type", "text/plain")
+          .set("Accept", "*/*"),
+      }
+    );
   }
 
   getPublicServicesList() {
@@ -202,5 +224,21 @@ export class PublicServiceServiceService {
           .set("Accept", "*/*"),
       }
     );
+  }
+
+  public reprocessBill(consecutiveNumber: string): void {
+    this.http
+      .post(
+        `${this.url}/getreprocessxmlbill`,
+        JSON.stringify({ consecutiveNumber })
+      )
+      .subscribe((response: any) => {
+        console.log(response);
+        if (response == 1 || response == 3) {
+          this.reprocessBillSuccessSubject.next(true);
+        } else {
+          this.reprocessBillErrorSubject.next(true);
+        }
+      });
   }
 }

@@ -356,7 +356,7 @@
                             matTooltip="Ver PDF">
                             <mat-icon>search</mat-icon>
                         </button>
-                        <button (click)="sendBillPDF(row)"
+                        <button (click)="sendBillPDF(row.consecutiveNumber)"
                             class="buttonAction"
                             matTooltip="Reenvio">
                             <mat-icon>send</mat-icon>
@@ -365,6 +365,12 @@
                             class="buttonAction"
                             matTooltip="Generar Nota Crédito">
                             <mat-icon>block</mat-icon>
+                        </button>
+                        <button *ngIf="row.estado == 'Procesado'"
+                            (click)="reprocessBill(row.consecutiveNumber)"
+                            class="buttonAction"
+                            matTooltip="Reprocesar documento electrónico en Hacienda">
+                            <mat-icon>donut_large</mat-icon>
                         </button>
                     </td>
 

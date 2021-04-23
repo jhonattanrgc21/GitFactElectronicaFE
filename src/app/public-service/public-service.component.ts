@@ -13,7 +13,10 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
+import { Input, OnChanges } from "@angular/core";
 import { PublicServiceServiceService } from "../services/public-service-service.service";
+import { DataSource } from "@angular/cdk/collections";
+import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/of";
 import {
   MatSnackBar,
@@ -21,11 +24,11 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material";
-import { Subscription } from "rxjs";
 import { PublicServiceReceiptDetailModalComponent } from "./modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component";
 import { Router } from "@angular/router";
 
-import { DomSanitizer } from "@angular/platform-browser";
+import { BrowserModule, DomSanitizer } from "@angular/platform-browser";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-public-service",
@@ -134,8 +137,32 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(this.handleResedEmailErrorSubscription());
     this.subscriptions.add(this.handleResendEmailSuccessSubscription());
+    this.subscriptions.add(this.handleReprocessBillErrorSubscription());
+    this.subscriptions.add(this.handleReprocessBillSuccessSubscription());
+  }
+  public handleReprocessBillErrorSubscription(): Subscription {
+    return this.publicServiceService.reprocessBillError$.subscribe(
+      (error: boolean) => {
+        if (error) {
+          this.openSnackBar(
+            "No se logro procesar la factura, por favor intente más tarde.",
+            ""
+          );
+        }
+      }
+    );
   }
 
+  public handleReprocessBillSuccessSubscription(): Subscription {
+    return this.publicServiceService.reprocessBillSuccess$.subscribe(
+      (success: boolean) => {
+        if (success) {
+          this.openSnackBar("El proceso fue éxitoso", "");
+          this.getBillsFilter();
+        }
+      }
+    );
+  }
   public handleResedEmailErrorSubscription(): Subscription {
     return this.publicServiceService.resendEmailError$.subscribe(
       (error: boolean) => {
@@ -373,6 +400,10 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
       });
   }
 
+  public reprocessBill(consecutiveNumber: string): void {
+    this.publicServiceService.reprocessBill(consecutiveNumber);
+  }
+
   public ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -416,6 +447,8 @@ export class PDFBillDialog {
   constructor(
     public dialogRef: MatDialogRef<PDFBillDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   okClick(): void {
