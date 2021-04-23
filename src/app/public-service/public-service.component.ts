@@ -13,10 +13,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
-import { Input, OnChanges } from "@angular/core";
 import { PublicServiceServiceService } from "../services/public-service-service.service";
-import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/of";
 import {
   MatSnackBar,
@@ -27,7 +24,7 @@ import {
 import { PublicServiceReceiptDetailModalComponent } from "./modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component";
 import { Router } from "@angular/router";
 
-import { BrowserModule, DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 
 @Component({
