@@ -5,6 +5,7 @@ import { EntryRoutingModule } from "./entry.routing.module";
 import { LoginComponent } from "./pages/login/login.component";
 import { MaterialModule } from "../material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   declarations: [EntryComponent, LoginComponent],
 })

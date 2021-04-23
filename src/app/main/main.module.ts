@@ -8,10 +8,6 @@ import {
 } from "../public-service/public-service.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import {
-  CreditNoteComponent,
-  CreditNoteAlertDialog,
-} from "../credit-note/credit-note.component";
-import {
   InsertBillComponent,
   InsertBillAlertDialog,
 } from "../insert-bill/insert-bill.component";
@@ -20,6 +16,9 @@ import { PublicServiceReceiptDetailModalComponent } from "../public-service/moda
 import { ToolBarComponent } from "../tool-bar/tool-bar.component";
 import { MaterialModule } from "../material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ResendEmailModalComponent } from "../public-service/modal/resend-email-modal/resend-email-modal.component";
+import { CreditNoteComponent } from "../credit-note/credit-note.component";
+import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
 
 @NgModule({
   imports: [
@@ -41,6 +40,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     PDFBillDialog,
     CreditNoteComponent,
     CreditNoteAlertDialog,
+    ResendEmailModalComponent,
   ],
 })
 export class MainModule {}
