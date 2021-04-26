@@ -37,6 +37,7 @@
         <div class="flex-col center">
           <button mat-raised-button
             color="primary"
+            [disabled]="resendForm.invalid"
             class="credix-theme"
             (click)="resendEmail()">Confirmar</button>
         </div>
