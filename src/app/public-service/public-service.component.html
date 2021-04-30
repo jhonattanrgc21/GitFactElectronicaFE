@@ -372,6 +372,12 @@
                             matTooltip="Reprocesar documento electrónico en Hacienda">
                             <mat-icon>donut_large</mat-icon>
                         </button>
+                        <button *ngIf="row.estado == 'Rechazado'"
+                            (click)="rejectionMessage(row)"
+                            class="buttonAction"
+                            matTooltip="Visualizar el motivo de rechazo">
+                            <mat-icon>info</mat-icon>
+                        </button>
                     </td>
 
 
@@ -391,3 +397,7 @@
     <app-resend-email-modal *ngIf="showModalResendEmail"
         (closeResendModal)="toggleModalResendEmail()"
         [selectedReceipt]="selectedReceipt"></app-resend-email-modal>
+
+    <app-rejection-message-modal *ngIf="showModalRejectionMessage"
+        (closeRejectionModal)="toggleModalRejectionMessage()"
+        [selectedReceipt]="selectedReceipt"></app-rejection-message-modal>

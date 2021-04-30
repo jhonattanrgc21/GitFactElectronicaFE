@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ResendEmailModalComponent } from "../public-service/modal/resend-email-modal/resend-email-modal.component";
 import { CreditNoteComponent } from "../credit-note/credit-note.component";
 import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
+import { RejectionMessageModalComponent } from "../public-service/modal/rejection-message-modal/rejection-message-modal.component";
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
     CreditNoteComponent,
     CreditNoteAlertDialog,
     ResendEmailModalComponent,
+    RejectionMessageModalComponent,
   ],
 })
 export class MainModule {}

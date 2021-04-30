@@ -11,12 +11,16 @@ export class PublicServiceServiceService {
   private resendEmailErrorSubject: Subject<boolean>;
   private reprocessBillSuccessSubject: Subject<boolean>;
   private reprocessBillErrorSubject: Subject<boolean>;
+  private rejectionMessageSuccessSubject: Subject<string>;
+  private rejectionMessageErrrSubject: Subject<boolean>;
 
   constructor(private http: HttpClient) {
     this.resendEmailSuccessSubject = new Subject<boolean>();
     this.resendEmailErrorSubject = new Subject<boolean>();
     this.reprocessBillSuccessSubject = new Subject<boolean>();
     this.reprocessBillErrorSubject = new Subject<boolean>();
+    this.rejectionMessageSuccessSubject = new Subject<string>();
+    this.rejectionMessageErrrSubject = new Subject<boolean>();
   }
 
   public get resendEmailSuccess$(): Observable<boolean> {
@@ -33,6 +37,14 @@ export class PublicServiceServiceService {
 
   public get reprocessBillError$(): Observable<boolean> {
     return this.reprocessBillErrorSubject.asObservable();
+  }
+
+  public get rejectionMessageSuccess$(): Observable<string> {
+    return this.rejectionMessageSuccessSubject.asObservable();
+  }
+
+  public get rejectionMessageError$(): Observable<boolean> {
+    return this.rejectionMessageErrrSubject.asObservable();
   }
 
   getPublicServiceReceiptsByParams(
@@ -105,8 +117,8 @@ export class PublicServiceServiceService {
           this.resendEmailErrorSubject.next(true);
         }
       });
-    }
-    
+  }
+
   sendBillPDF(consecutiveNumber) {
     const method = "/getbillbyconsecutive";
     return this.http.post(
@@ -233,12 +245,25 @@ export class PublicServiceServiceService {
         JSON.stringify({ consecutiveNumber })
       )
       .subscribe((response: any) => {
-        console.log(response);
         if (response == 1 || response == 3) {
           this.reprocessBillSuccessSubject.next(true);
         } else {
           this.reprocessBillErrorSubject.next(true);
         }
       });
+  }
+
+  public getRejectionMessage(consecutiveNumber: string): void {
+    let message =
+      "La firma del comprobante electrónico no es válida (El certificado empleado se encuentra revocado.)";
+    // this.http.get(`${this.url}/getrejectionmessage`)
+    // .subscribe((message: string) => {
+    if (message !== "") {
+      this.rejectionMessageSuccessSubject.next(message);
+    } else {
+      this.reprocessBillErrorSubject.next(true);
+    }
+    // }
+    // )
   }
 }

@@ -39,6 +39,7 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
   public submitted = false;
   public subscriptions: Subscription;
   public showModalResendEmail: boolean;
+  public showModalRejectionMessage: boolean;
   public publicServiceReceiptRows: Object = {};
   public validArgs = false;
   public isActLengthCorrect = "true";
@@ -93,6 +94,7 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions = new Subscription();
     this.showModalResendEmail = false;
+    this.showModalRejectionMessage = false;
   }
 
   public ngOnInit(): void {
@@ -259,6 +261,10 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
     this.showModalResendEmail = !this.showModalResendEmail;
   }
 
+  public toggleModalRejectionMessage(): void {
+    this.showModalRejectionMessage = !this.showModalRejectionMessage;
+  }
+
   public getBillsFilter(): void {
     this.isLoadingResults = true;
 
@@ -399,6 +405,11 @@ export class PublicServiceComponent implements OnInit, OnDestroy {
 
   public reprocessBill(consecutiveNumber: string): void {
     this.publicServiceService.reprocessBill(consecutiveNumber);
+  }
+
+  public rejectionMessage(publicServiceReceipt: PublicServiceReceipts): void {
+    this.selectedReceipt = publicServiceReceipt;
+    this.toggleModalRejectionMessage();
   }
 
   public ngOnDestroy(): void {
