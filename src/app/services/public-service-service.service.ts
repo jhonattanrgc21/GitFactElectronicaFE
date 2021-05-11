@@ -254,16 +254,14 @@ export class PublicServiceServiceService {
   }
 
   public getRejectionMessage(consecutiveNumber: string): void {
-    let message =
-      "La firma del comprobante electrónico no es válida (El certificado empleado se encuentra revocado.)";
-    // this.http.get(`${this.url}/getrejectionmessage`)
-    // .subscribe((message: string) => {
-    if (message !== "") {
-      this.rejectionMessageSuccessSubject.next(message);
-    } else {
-      this.reprocessBillErrorSubject.next(true);
-    }
-    // }
-    // )
+    this.http
+      .get(`${this.url}/getrejectionmessage/${consecutiveNumber}`)
+      .subscribe((message: any) => {
+        if (message.success !== null) {
+          this.rejectionMessageSuccessSubject.next(message.success);
+        } else {
+          this.reprocessBillErrorSubject.next(true);
+        }
+      });
   }
 }

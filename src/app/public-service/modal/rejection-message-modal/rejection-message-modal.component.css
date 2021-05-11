@@ -137,8 +137,8 @@ hr.style-one {
   flex-direction: column;
   display: flex;
   padding: 20px;
-  height: 35%;
-  max-height: 20%ks;
+  height: 20%;
+  max-height: 40%;
   width: 40%;
   max-width: 40%;
 }
@@ -154,6 +154,7 @@ hr.style-one {
   margin-top: 12px;
   font-size: 16px;
   margin-bottom: 12px;
+  height: 100%;
 }
 
 .footer-modal {
