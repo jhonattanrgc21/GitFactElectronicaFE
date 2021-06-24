@@ -141,6 +141,7 @@ hr.style-one {
   max-height: 40%;
   width: 40%;
   max-width: 40%;
+  overflow: auto;
 }
 
 .header-modal {
