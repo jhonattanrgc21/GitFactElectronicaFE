@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://micredix.net/sib/api',
+  apiLoginUrl: 'https://micredix.org/canalesbe/api',
   defaultPmnId: 4,
   defaultNmtId: 3
 };

@@ -1,124 +1,369 @@
-<div class="bill-container">
-
-</div>
-
 <div id="section-container">
   <div id="content">
     <h2 id="main-header">Generar Nota de Crédito</h2>
     <hr class="style-one">
-    <br/>
-    <mat-label class="date-bill" >Fecha Nota Crédito: {{currentDate}}</mat-label><br/>
-      <mat-label class="date-bill" >Tipo de Documento: {{documentTypeDescription}}</mat-label><br/>
-      <mat-label class="date-bill" >Fecha Emisión de Documento: {{emissionDocumentDate}}</mat-label><br/>
-      <mat-label class="date-bill" >Moneda Documento: {{currencyDescription}}</mat-label><br/>
-      <mat-label class="date-bill" >Identificación del Receptor: {{receiverIdentification}}</mat-label><br/>
-      <mat-label class="date-bill" >Nombre del Receptor: {{receiverName}}</mat-label><br/>
+    <br />
+    <mat-label class="date-bill">Fecha Nota Crédito: {{currentDate}}</mat-label><br />
+    <mat-label class="date-bill">Tipo de Documento: {{documentTypeDescription}}</mat-label><br />
+    <mat-label class="date-bill">Fecha Emisión de Documento: {{emissionDocumentDate}}</mat-label><br />
+    <mat-label class="date-bill">Moneda Documento: {{currencyDescription}}</mat-label><br />
+    <mat-label class="date-bill">Identificación del Receptor: {{receiverIdentification}}</mat-label><br />
+    <mat-label class="date-bill">Nombre del Receptor: {{receiverName}}</mat-label><br />
 
-          <table mat-table [dataSource]="dataSource" matSort>
-              <ng-container matColumnDef="quantity">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-                  <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-              </ng-container>
+    <div class="margin-20">
+      <button mat-raised-button
+        [disabled]="isAddDetailCreditNote || rowEditable !==-1"
+        (click)="addDetailCreditNote()"><i class="material-icons">add_circle</i> Agregar Detalle</button>
+    </div>
+    <br>
 
-              <ng-container matColumnDef="detailDescription">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalle </th>
-                  <td mat-cell *matCellDef="let element"> {{element.detailDescription}} </td>
-              </ng-container>
+    <div *ngIf="isAddDetailCreditNote">
+      <mat-card>
+        <div class="flex-row">
+          <div class="flex-col">
+            Debe ingresar los siguientes datos para proceder con el nuevo detalle.
+          </div>
+        </div>
+        <br>
 
-              <ng-container matColumnDef="unitPrice">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
-                  <td mat-cell *matCellDef="let element"> {{element.unitPrice}} </td>
-              </ng-container>
+        <div class="flex-row new-form-row">
+          <div class="flex-col">
+            <mat-form-field [floatLabel]="'always'">
+              <mat-label>Cantidad</mat-label>
+              <input matInput
+                type="number"
+                [formControl]="getFormControl(addDetailForm.controls.quantity)">
+            </mat-form-field>
+            <div *ngIf="isControlInvalid(addDetailForm.controls.quantity)"
+              class="has-error">
+              {{ getControlErrors("quantity", addDetailForm, addDetailFormErrors) }}
+            </div>
+          </div>
 
-              <ng-container matColumnDef="measure">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Medida </th>
-                  <td mat-cell *matCellDef="let element"> {{element.measure}} </td>
-              </ng-container>
 
-              <ng-container matColumnDef="taxed">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Gravado </th>
-                  <td mat-cell *matCellDef="let element"> {{element.taxed}} </td>
-              </ng-container>
+          <div class="flex-col">
+            <mat-form-field [floatLabel]="'always'">
+              <mat-label>Medida</mat-label>
+              <mat-select class="form-control"
+                [formControl]="getFormControl(addDetailForm.controls.measure)">
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let detailsRows; columns: displayedColumns;"></tr>
-          </table>
-          <br/>
-          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="insert-input">
-              <mat-select placeholder="Código Referencia" formControlName="selectedReferenceCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceCode.errors }">
-                <mat-option *ngFor="let referenceCode of referenceCodeList" [value]="referenceCode[0]">{{referenceCode[1]}}</mat-option>
+                <mat-option *ngFor="let measureItem of measureList"
+                  [value]="measureItem[0]">{{measureItem[1]}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <div *ngIf="submitted && f.selectedReferenceCode.errors" class="has-error">
-              <div *ngIf="f.selectedReferenceCode.errors.required">Seleccione una código de referencia</div>
+            <div *ngIf="isControlInvalid(addDetailForm.controls.measure)"
+              class="has-error">
+              {{ getControlErrors("measure", addDetailForm, addDetailFormErrors) }}
+            </div>
+
           </div>
-            <br/>
-            <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Generar Nota</button>
-          </form>
-      
 
-    <!--<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-      
+          <div class="flex-col">
+            <mat-form-field [floatLabel]="'always'">
+              <mat-label>Servicio</mat-label>
+              <mat-select class="form-control"
+                [formControl]="getFormControl(addDetailForm.controls.serviceCode)">
+                <mat-option *ngFor="let serviceCodeItem of serviceCodeList"
+                  [value]="serviceCodeItem.sco_Id">{{serviceCodeItem.SCO_Name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isControlInvalid(addDetailForm.controls.serviceCode)"
+              class="has-error">
+              {{ getControlErrors("serviceCode", addDetailForm, addDetailFormErrors) }}
+            </div>
+          </div>
 
-      <mat-form-field class="insert-input">
-        <mat-select placeholder="Tipo de Documento" formControlName="selectedReferenceDocument" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceDocument.errors }">
-          <mat-option *ngFor="let referenceDocument of referenceDocumentList" [value]="referenceDocument[0]" (click)="checkArgs()">{{referenceDocument[1]}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
-          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione un tipo de Documento</div>
-      </div>
+          <div class="flex-col">
+            <mat-form-field [floatLabel]="'always'">
+              <mat-label>Detalle</mat-label>
+              <input matInput
+                [formControl]="getFormControl(addDetailForm.controls.detailDescription)" />
+            </mat-form-field>
+            <div *ngIf="isControlInvalid(addDetailForm.controls.detailDescription)"
+              class="has-error">
+              {{ getControlErrors("detailDescription", addDetailForm, addDetailFormErrors) }}
+            </div>
+          </div>
 
-      <mat-form-field class="insert-input">
-        <mat-label>Identificación Receptor</mat-label>
-        <input matInput formControlName="identification" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
-        
-      </mat-form-field>
-      <div *ngIf="submitted && f.identification.errors" class="has-error">
-          <div *ngIf="f.identification.errors.required">La identificación del receptor es requerida</div>
-      </div>
+          <div class="flex-col">
+            <mat-form-field [floatLabel]="'always'">
+              <mat-label>Monto</mat-label>
+              <input matInput
+                type="number"
+                [formControl]="getFormControl(addDetailForm.controls.unitPrice) " />
+            </mat-form-field>
+            <div *ngIf="isControlInvalid(addDetailForm.controls.unitPrice)"
+              class="has-error">
+              {{ getControlErrors("unitPrice", addDetailForm, addDetailFormErrors) }}
+            </div>
+          </div>
 
-      <mat-form-field class="insert-input">
-        <mat-label>Número de Establecimiento</mat-label>
-        <input matInput formControlName="establishment" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.establishment.errors }">
-      </mat-form-field>
-      <div *ngIf="submitted && f.establishment.errors" class="has-error">
-          <div *ngIf="f.establishment.errors.minlength">Valide la longitud del número de establecimiento (15)</div>
-          <div *ngIf="f.establishment.errors.maxlength">Valide la longitud del número de establecimiento (15)</div>
-          <div *ngIf="f.establishment.errors.pattern">Este campo solo acepta valores numéricos</div>
-      </div>
-
-      <mat-form-field class="insert-input">
-        <mat-select placeholder="Moneda Factura" formControlName="selectedCurrency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.selectedCurrency.errors }">
-          <mat-option *ngFor="let currency of currencyList" [value]="currency[0]" (click)="checkArgs()">{{currency[1]}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div *ngIf="submitted && f.selectedReferenceDocument.errors" class="has-error">
-          <div *ngIf="f.selectedReferenceDocument.errors.required">Seleccione una Moneda</div>
-      </div>
-
-      <p class="content-header">Ingrese los detalles de la factura</p>
-      <div class="border-table">
-        
-
-
-        <div class="margin-20">
-          <a (click)="addDetail()" style="cursor: default">
-            <i class="material-icons">add_circle</i>Agregar Detalle 
-          </a>
+          <div class="flex-col">
+            <mat-checkbox [formControl]="getFormControl(addDetailForm.controls.taxed)"> IVA 13%
+            </mat-checkbox>
+          </div>
         </div>
-      </div>
-      <br/>
-      <div *ngIf="submitted && f.items.errors" class="has-error">
-          <div *ngIf="f.items.errors.required">Verifique los detalles de las lineas de la factura</div>
-      </div>
-      
 
-      <div id="search-button">
-        <button mat-raised-button color="primary" class="credix-theme" [disabled]="!insertButton"><i class="material-icons">add_circle</i>Agregar Factura</button>
+        <div class="flex-row rigth">
+          <div class="flex-col-1">
+            <button mat-raised-button
+              (click)="aceptAddDetailCreditNote()"
+              color="primary"
+              [disabled]="addDetailForm.invalid"
+              class="credix-theme"><i class="material-icons">check</i> Aceptar </button>
+          </div>
+          <div class="flex-col-1 space-row">
+            <button mat-raised-button
+              class="buttons"
+              (click)="cancelAddDetailCreditNote()"
+              color="primary"
+              class="credix-theme"><i class="material-icons">cancel</i> Cancelar</button>
+          </div>
+        </div>
+
+      </mat-card>
+    </div>
+    <br>
+
+    <table mat-table
+      *ngIf="detailsArray && detailsArray.length"
+      [dataSource]="dataSource"
+      class="credit-note-table mat-elevation-z8">
+      <ng-container matColumnDef="line">
+        <th width="5%"
+          mat-header-cell
+          *matHeaderCellDef> Linea </th>
+        <td mat-cell
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element;let i = index;">
+          {{i+1}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th width="5%"
+          mat-header-cell
+          *matHeaderCellDef> Cantidad </th>
+        <td mat-cell
+          class="input-size"
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-form-field class="mat-form-fiel-width"
+              *ngIf="isRowModeEdit(i)"
+              [floatLabel]="'always'">
+              <input matInput
+                type="number"
+                [formControl]="getRowFormControl(i, 'quantity')">
+            </mat-form-field>
+            <div *ngIf="getRowFormControl(i, 'quantity').invalid"
+              class="has-error">
+              {{ getControlErrors("quantity", myFormArray.at(i), addDetailFormErrors) }}
+            </div>
+          </div>
+          <div *ngIf="!isRowModeEdit(i)">{{getRowFormControl(i, 'quantity') ? getRowFormControl(i, 'quantity').value : ""}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="measure">
+        <th width="20%"
+          mat-header-cell
+          *matHeaderCellDef> Medida </th>
+        <td mat-cell
+          class="input-size"
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-form-field class="mat-form-fiel-width"
+              [floatLabel]="'always'">
+              <mat-select *ngIf="isRowModeEdit(i)"
+                class="form-control"
+                [formControl]="getRowFormControl(i, 'measure')">
+                <mat-option *ngFor="let measureItem of measureList"
+                  [value]="measureItem[0]">{{measureItem[1]}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="getRowFormControl(i, 'measure').invalid"
+              class="has-error">
+              {{ getControlErrors("measure", myFormArray.at(i), addDetailFormErrors) }}
+            </div>
+          </div>
+          <div *ngIf="!isRowModeEdit(i)">{{getMeasureName(getRowFormControl(i, 'measure').value) }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="serviceCode">
+        <th width="20%"
+          mat-header-cell
+          *matHeaderCellDef> Servicio </th>
+        <td mat-cell
+          class="input-size"
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-form-field class="mat-form-fiel-width"
+              [floatLabel]="'always'">
+              <mat-select *ngIf="isRowModeEdit(i)"
+                class="form-control"
+                [formControl]="getRowFormControl(i, 'serviceCode')">
+                <mat-option *ngFor="let serviceCodeItem of serviceCodeList"
+                  [value]="serviceCodeItem.sco_Id">{{serviceCodeItem.SCO_Name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="getRowFormControl(i, 'serviceCode').invalid"
+              class="has-error">
+              {{ getControlErrors("serviceCode", myFormArray.at(i), addDetailFormErrors) }}
+            </div>
+          </div>
+
+          <div *ngIf="!isRowModeEdit(i)">{{ getServiceSCOName(getRowFormControl(i, 'serviceCode').value)}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="detailDescription">
+        <th width="20%"
+          mat-header-cell
+          *matHeaderCellDef> Detalle </th>
+        <td mat-cell
+          class="input-size"
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-form-field class="mat-form-fiel-width"
+              width="100%"
+              *ngIf="isRowModeEdit(i)"
+              [floatLabel]="'always'">
+              <input matInput
+                [formControl]="getRowFormControl(i, 'detailDescription')">
+            </mat-form-field>
+            <div *ngIf="getRowFormControl(i, 'detailDescription').invalid"
+              class="has-error">
+              {{ getControlErrors("detailDescription", myFormArray.at(i), addDetailFormErrors) }}
+            </div>
+          </div>
+          <div *ngIf="!isRowModeEdit(i)">{{getRowFormControl(i, 'detailDescription') ? getRowFormControl(i, 'detailDescription').value : ""}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unitPrice">
+        <th width="8%"
+          mat-header-cell
+          *matHeaderCellDef> Monto </th>
+        <td mat-cell
+          class="input-size"
+          [class.baseline]="isRowModeEdit(i)"
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-form-field class="mat-form-fiel-width"
+              width="100%"
+              *ngIf="isRowModeEdit(i)"
+              [floatLabel]="'always'">
+              <input matInput
+                [formControl]="getRowFormControl(i, 'unitPrice')">
+            </mat-form-field>
+            <div *ngIf="getRowFormControl(i, 'unitPrice').invalid"
+              class="has-error">
+              {{ getControlErrors("unitPrice", myFormArray.at(i), addDetailFormErrors) }}
+            </div>
+          </div>
+          <div *ngIf="!isRowModeEdit(i)">{{ (getRowFormControl(i, 'unitPrice') ? getRowFormControl(i, 'unitPrice').value : "") | currency:getCurrencyCode():'symbol-narrow'}}</div>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxed">
+        <th width="8%"
+          mat-header-cell
+          *matHeaderCellDef> IVA 13% </th>
+        <td mat-cell
+          *matCellDef="let element; let i = index">
+          <div *ngIf="isRowModeEdit(i)">
+            <mat-checkbox [disabled]="false"
+              [formControl]="getRowFormControl(i, 'taxed')">
+            </mat-checkbox>
+          </div>
+
+          <div *ngIf="!isRowModeEdit(i)">
+            {{getValueTaxed(getRowFormControl(i, 'taxed').value)}}
+          </div>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th width="14%"
+          mat-header-cell
+          *matHeaderCellDef> </th>
+        <td mat-cell
+          *matCellDef="let element;let i = index;">
+          <div *ngIf="rowEditable ===-1">
+            <button mat-icon-button
+              (click)="removeDetailCreditNote(i)"
+              [disabled]="isAddDetailCreditNote"
+              style="cursor: pointer">
+              <i class="material-icons">delete_forever</i>
+            </button>
+            <button mat-icon-button
+              class="material-icons"
+              [disabled]="isAddDetailCreditNote"
+              style="cursor: pointer; padding-left: 16px;"
+              (click)="toggleRowEditable(i)">
+              <i class="material-icons">create</i></button>
+          </div>
+
+          <div class="accept-cancel-buttons"
+            *ngIf="isRowModeEdit(i)">
+            <button mat-raised-button
+              (click)="aceptEditDetailCreditNote(i)"
+              color="primary"
+              [disabled]="myFormArray.at(i).invalid"
+              class="credix-theme"><i class="material-icons">check</i> Aceptar </button>
+            <button mat-raised-button
+              class="buttons"
+              (click)="cancelEditDetailCreditNote(i)"
+              color="primary"
+              class="credix-theme"><i class="material-icons">cancel</i> Cancelar</button>
+
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row
+        *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+        *matRowDef="let detailsRows; columns: displayedColumns"></tr>
+
+    </table>
+
+    <div class="flex-row"
+      *ngIf="detailsArray && !detailsArray.length">
+      <div class="flex-col">
+        Debe agregar detalles para generar una nota de crédito.
       </div>
+    </div>
+
+    <br />
+    <form [formGroup]="myForm"
+      (ngSubmit)="onSubmit()">
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Código Referencia"
+          formControlName="selectedReferenceCode"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.selectedReferenceCode.errors }">
+          <mat-option *ngFor="let referenceCode of referenceCodeList"
+            [value]="referenceCode[0]">{{referenceCode[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="submitted && f.selectedReferenceCode.errors"
+        class="has-error">
+        <div *ngIf="f.selectedReferenceCode.errors.required">Seleccione una código de referencia</div>
+      </div>
+      <br />
+      <button mat-raised-button
+        color="primary"
+        class="credix-theme"
+        [disabled]="!insertButton || (detailsArray && !detailsArray.length ) ||rowEditable !==-1 "><i class="material-icons">add_circle</i> Generar Nota</button>
     </form>
-    -->
+
   </div>
 </div>

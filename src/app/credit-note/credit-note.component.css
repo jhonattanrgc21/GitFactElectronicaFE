@@ -1,168 +1,341 @@
-body, html { height: 90%; }
+body,
+html {
+  height: 90%;
+}
 .outer {
   width: 1px;
   height: 50%;
   margin: auto;
   position: relative;
   overflow: hidden;
-  
-
 }
 .inner {
   position: absolute;
-  width:50%;
+  width: 50%;
   height: 40%;
   background: grey;
   top: 30%;
-   background-image: linear-gradient(to top, rgb(255, 255, 255), rgba(221, 27, 27, 0.973), rgb(255, 255, 255));
-
+  background-image: linear-gradient(
+    to top,
+    rgb(255, 255, 255),
+    rgba(221, 27, 27, 0.973),
+    rgb(255, 255, 255)
+  );
 }
 #section-container {
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
-    background-color: rgb(255, 255, 255);
-    height: auto;
-    width: 96%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgb(255, 255, 255);
+  height: auto;
+  width: 96%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #content {
-    padding: 2%;
-    display: flex;
-    flex-direction: column;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
 }
-#main-header{
-    text-align: left;
+#main-header {
+  text-align: left;
 }
 hr.style-one {
-    border: 0;
-    width: 100%;
-    height: 2px;
-    background: white;
-    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(221, 27, 27, 0.973), rgb(255, 255, 255));
+  border: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 255, 255),
+    rgba(221, 27, 27, 0.973),
+    rgb(255, 255, 255)
+  );
 }
-.content-header{
-    text-align: left;
+.content-header {
+  text-align: left;
 }
 
-#filters-container{
-    display: block;
-
+#filters-container {
+  display: block;
 }
-.filter-input{
-    display: inline-block;
-    align-content: center;
-    margin: 2%
+.filter-input {
+  display: inline-block;
+  align-content: center;
+  margin: 2%;
 }
-#date-small{
-    width:150px !important;
+#date-small {
+  width: 150px !important;
 }
-#amount-small{
-    width:150px !important;
+#amount-small {
+  width: 150px !important;
 }
-.input-medium{
-    width:175px !important;
+.input-medium {
+  width: 175px !important;
 }
-#search-button{
-    margin: auto;
-    width: 5.7%;
-
-
+#search-button {
+  margin: auto;
+  width: 5.7%;
 }
 table {
-    width: 100%;
-  }
-#data-table{
-   margin-top: 2%
-} 
-  th.mat-sort-header-sorted {
-    color: black;
-  }
-  .mat-form-field {
-    font-size: 14px;
-    width: 25%;
-    margin-top: 1%;
-    margin-left: 1%;
-  } 
-.credix-theme{
-    background-color: rgba(221, 27, 27, 0.973)
+  width: 100%;
+}
+#data-table {
+  margin-top: 2%;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 25%;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+.credix-theme {
+  background-color: rgba(221, 27, 27, 0.973);
 }
 
-.vertical-line{
-    vertical-align: middle;
-    height: 90px;
+.vertical-line {
+  vertical-align: middle;
+  height: 90px;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
-input[type=date]::-webkit-inner-spin-button, 
-input[type=date]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
-input::-webkit-calendar-picker-indicator{
-    display: none;
+input::-webkit-calendar-picker-indicator {
+  display: none;
 }
-input[type="date"]::-webkit-input-placeholder{ 
-    visibility: hidden !important;
+input[type="date"]::-webkit-input-placeholder {
+  visibility: hidden !important;
 }
-
-
 
 /* Structure */
 .example-container {
-    position: relative;
-  }
-  .example-table-container {
-    position: relative;
-    max-height: 400px;
-    overflow: auto;
-  }
-  
-  .example-loading-shade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 56px;
-    right: 0;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .red-snackbar {
-    background: rgb(184, 17, 17);
-  }
-
-  .insert-input{
-      width: 50%;
-  }
-  .table-insert{
-        text-align:center; 
-  }
-  .border-table{
-    border-width:2px;
-    border-style:solid;
-    border-color:black;
-  }
-
-  .has-error  {
-    color: rgb(184, 17, 17);
-    font-size: 14px;
-    padding-left: 1%;
+  position: relative;
+}
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
 }
 
-.date-bill{
-    padding-left: 1%;
-    font-size: 14px;
-    color: grey;
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.red-snackbar {
+  background: rgb(184, 17, 17);
+}
+
+.insert-input {
+  width: 50%;
+}
+.table-insert {
+  text-align: center;
+}
+.border-table {
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+}
+
+.has-error {
+  color: rgb(184, 17, 17);
+  font-size: 14px;
+  padding-left: 1%;
+}
+
+.date-bill {
+  padding-left: 1%;
+  font-size: 14px;
+  color: grey;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: rgba(221, 27, 27, 0.973);
+}
+
+.buttons {
+  padding-left: 36px;
+}
+
+/* Grid */
+div[class*="flex"] {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  justify-content: space-between;
+  align-content: flex-start;
+}
+
+.flex-row {
+  width: 100%;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.flex-row > div[class^="flex-col"] {
+  height: 100%;
+  flex-flow: column wrap;
+}
+
+.flex-row.left {
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+.flex-row.rigth {
+  align-content: flex-end;
+  justify-content: flex-end;
+}
+
+.flex-row > div[class^="flex-col"].right {
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+.flex-row > div[class^="flex-col"].left {
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.flex-row > div[class^="flex-col"].top {
+  justify-content: flex-start;
+}
+
+.flex-row > div[class^="flex-col"].bottom {
+  justify-content: flex-end;
+}
+
+.flex-row.center,
+.flex-row > div[class^="flex-col"].center {
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  margin: auto;
+}
+
+.flex-row .flex-col-12 {
+  width: 99.6%;
+  max-width: 100%;
+}
+
+.flex-row .flex-col-11 {
+  width: 91.3%;
+  max-width: 91.3%;
+}
+
+.flex-row .flex-col-10 {
+  width: 83%;
+  max-width: 83%;
+}
+.flex-row .flex-col-9 {
+  width: 74.7%;
+  max-width: 74.7%;
+}
+
+.flex-row .flex-col-8 {
+  width: 66.4%;
+  max-width: 66.4%;
+}
+
+.flex-row .flex-col-7 {
+  width: 58.1%;
+  max-width: 58.1%;
+}
+
+.flex-row .flex-col-6 {
+  width: 49.8%;
+  max-width: 49.8%;
+}
+
+.flex-row .flex-col-5 {
+  width: 41.5%;
+  max-width: 41.5%;
+}
+
+.flex-row .flex-col-4 {
+  width: 33.2%;
+  max-width: 33.2%;
+}
+
+.flex-row .flex-col-3 {
+  width: 24.9%;
+  max-width: 24.9%;
+}
+
+.flex-row .flex-col-2 {
+  width: 16.6%;
+  max-width: 16.6%;
+}
+
+.flex-row .flex-col-1 {
+  width: 8.3%;
+  max-width: 8.3%;
+}
+
+.new-form-row {
+  column-gap: 16px;
+  align-items: baseline;
+}
+
+::ng-deep .new-form-row mat-form-field.mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+  font-size: 12px;
+}
+
+.space-row {
+  padding-left: 16px;
+}
+
+.accept-cancel-buttons {
+  display: flex;
+}
+
+::ng-deep .accept-cancel-buttons button {
+  width: 40%;
+  font-size: 12px;
+  padding: 0 4px 0 4px;
+}
+
+::ng-deep .accept-cancel-buttons button:first-of-type {
+ margin-right: 8px;
+}
+
+.input-size {
+  padding-right: 16px;
+  
+}
+
+.mat-form-fiel-width {
+  width: 100%;
+}
+
+.baseline {
+  vertical-align: baseline;
 }

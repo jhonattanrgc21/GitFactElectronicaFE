@@ -1,0 +1,93 @@
+<div class="login-container">
+  <div class="login-card">
+
+    <div class="flex-row left">
+      <img class="login-logo"
+        src="../assets/img/credix.png" />
+    </div>
+
+    <div class="flex-row">
+      <div class="flex-col center">
+        <h2>Ingreso al Sistema de Factura Electrónica</h2>
+      </div>
+    </div>
+
+    <hr class="style-one" />
+
+    <br />
+    <br />
+
+    <div class="login-form-container flex-row">
+      <div class="flex-col-3 center">
+        <div class="flex-row left">
+          <mat-icon> account_box </mat-icon>
+          <mat-form-field class="login-full-width"
+            [floatLabel]="'always'">
+            <mat-label>Usuario</mat-label>
+            <input matInput
+              [formControl]="getFormControl(loginForm.controls.username)" />
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="isControlInvalid(loginForm.controls.username)"
+          class="has-error">
+          {{ getControlErrors("username", loginForm, loginFormErrors) }}
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="flex-row left">
+          <mat-icon>password</mat-icon>
+          <mat-form-field class="login-full-width"
+            [floatLabel]="'always'">
+            <mat-label>Contraseña</mat-label>
+            <input id="password"
+              matInput
+              [type]="passwordType()"
+              [formControl]="getFormControl(loginForm.controls.password)" />
+          </mat-form-field>
+
+          <div>
+            <a *ngIf="!isPasswordShowed">
+              <mat-icon (click)="showPassword()" class="iconButton">visibility</mat-icon>
+            </a>
+            <a *ngIf="isPasswordShowed">
+              <mat-icon (click)="showPassword()" class="iconButton">visibility_off</mat-icon>
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="isControlInvalid(loginForm.controls.password)"
+          class="has-error">
+          {{ getControlErrors("password", loginForm, loginFormErrors) }}
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="errorL"
+      class="flex-row ">
+      <div class="flex-col center has-error">
+        {{messageError}}
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <div class="flex-col center">
+        <div class="login-button">
+          <button mat-raised-button
+            color="primary"
+            class="credix-theme"
+            (click)="login()">
+            <i class="material-icons">login</i>
+            Ingresar
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
