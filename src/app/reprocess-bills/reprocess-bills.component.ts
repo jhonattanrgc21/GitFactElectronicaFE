@@ -40,7 +40,6 @@ openSnackBar(message: string, action: string) {
 
   updateBill(){
     this.updateButton=false;
-    alert(this.f.billDate.value);
     this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
   
     this.reprocessBillService.updateBillS(this.date) 
