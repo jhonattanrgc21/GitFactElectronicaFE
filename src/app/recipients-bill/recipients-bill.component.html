@@ -1,0 +1,403 @@
+<div id="section-container">
+    <div id="content">
+        <h2 id="main-header">Facturas electronicas</h2>
+        <hr class="style-one">
+        <p class="content-header">Ingrese el o los filtros a aplicar en la búsqueda</p>
+        <form [formGroup]="myForm"
+            (ngSubmit)="onSubmit()">
+            <div id="filters-container">
+                <div align="center">
+                    <div class="filter-input">
+                        <p>
+                            <mat-form-field appearance="standard"
+                                class="input-medium">
+                                <mat-label>Número de cuenta</mat-label>
+                                <input matInput
+                                    placeholder="Ingresa el número de cuenta"
+                                    class="form-control"
+                                    formControlName="accountNumber"
+                                    [ngClass]="{ 'is-invalid': submitted && f.accountNumber.errors }"
+                                    (keyup.enter)="searchByArgs()">
+
+                                <mat-icon matSuffix>person</mat-icon>
+                                <mat-hint>Longitud min: 7 caracteres</mat-hint>
+                                <mat-error *ngIf="isActLengthCorrect=='false'">El número de cuenta debe tener al menos 7 caracteres</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <p>
+                            <mat-form-field appearance="standard"
+                                class="input-medium">
+                                <mat-label>Identificación</mat-label>
+                                <input matInput
+                                    placeholder="Ingresa el número de Identificación"
+                                    class="form-control"
+                                    formControlName="identification"
+                                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
+                                    (keyup.enter)="searchByArgs()">
+                                <mat-icon matSuffix>credit_card</mat-icon>
+                                <mat-hint>Longitud min: 9 digitos</mat-hint>
+                                <mat-error *ngIf="isCrdLengthCorrect=='false'">El número Identificacion debe tener 9 dígitos min</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <p>
+                            <mat-form-field appearance="standard"
+                                class="input-long">
+                                <mat-label>Número de consecutivo</mat-label>
+                                <input matInput
+                                    placeholder="Ingresa el número de consecutivo"
+                                    class="form-control"
+                                    formControlName="consecutiveNumber"
+                                    [ngClass]="{ 'is-invalid': submitted && f.consecutiveNumber.errors }"
+                                    (keyup.enter)="searchByArgs()">
+                                <mat-icon matSuffix>receipt</mat-icon>
+                                <mat-hint>Longitud: 20 caracteres</mat-hint>
+                                <mat-error *ngIf="isActLengthCorrect=='false'">El número de consecutivo debe tener 20 caracteres</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="example-full-width"
+                            id="date-small">
+                            <input matInput
+                                [matDatepicker]="pickerFrom"
+                                placeholder="Factura desde"
+                                class="form-control"
+                                formControlName="dateFrom"
+                                [ngClass]="{ 'is-invalid': submitted && f.dateFrom.errors }"
+                                (keyup.enter)="searchByArgs()">
+                            <mat-datepicker-toggle matSuffix
+                                [for]="pickerFrom"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi
+                                #pickerFrom></mat-datepicker>
+                            <mat-hint>mm/dd/aaaa</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="example-full-width"
+                            id="date-small">
+                            <input matInput
+                                [matDatepicker]="pickerTo"
+                                placeholder="Hasta"
+                                class="form-control"
+                                formControlName="dateTo"
+                                [ngClass]="{ 'is-invalid': submitted && f.dateTo.errors }"
+                                (keyup.enter)="searchByArgs()">
+                            <mat-datepicker-toggle matSuffix
+                                [for]="pickerTo"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi
+                                #pickerTo></mat-datepicker>
+                            <mat-hint>mm/dd/aaaa</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field id="amount-small">
+                            <input matInput
+                                placeholder="Monto desde"
+                                type="number"
+                                class="example-right-align"
+                                class="form-control"
+                                formControlName="amountFrom"
+                                [ngClass]="{ 'is-invalid': submitted && f.amountFrom.errors }"
+                                (keyup.enter)="searchByArgs()">
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field id="amount-small">
+                            <input matInput
+                                placeholder="Hasta"
+                                type="number"
+                                class="example-right-align"
+                                class="form-control"
+                                formControlName="amountTo"
+                                [ngClass]="{ 'is-invalid': submitted && f.amountTo.errors }"
+                                (keyup.enter)="searchByArgs()">
+                        </mat-form-field>
+                    </div>
+
+
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="input-medium">
+                            <mat-select placeholder="Estado"
+                                formControlName="selectedState"
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.selectedState.errors }">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let state of stateList"
+                                    [value]="state[0]"
+                                    (click)="checkArgs()">{{state[1]}}</mat-option>
+                            </mat-select>
+                            <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="input-medium">
+                            <mat-select placeholder="Medio de pago"
+                                formControlName="selectedPaymethod"
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.selectedPaymethod.errors }">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let paymethod of payMethodList"
+                                    [value]="paymethod[0]"
+                                    (click)="checkArgs()">{{paymethod[1]}}</mat-option>
+                            </mat-select>
+                            <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="input-medium">
+                            <mat-select placeholder="Condición de venta"
+                                formControlName="selectedSalecondition"
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.selectedSalecondition.errors }">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let salecondition of saleConditionList"
+                                    [value]="salecondition[0]"
+                                    (click)="checkArgs()">{{salecondition[1]}}</mat-option>
+                            </mat-select>
+                            <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="input-medium">
+                            <mat-select placeholder="Cartera"
+                                formControlName="selectedCartera"
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.selectedCartera.errors }">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let cartera of carteraList"
+                                    [value]="cartera"
+                                    (click)="checkArgs()">{{cartera}}</mat-option>
+                            </mat-select>
+                            <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <img class="vertical-line"
+                        src="../assets/img/vertical-line.png">
+                    <div class="filter-input">
+                        <mat-form-field class="input-medium">
+                            <mat-select placeholder="Tipo de documento"
+                                formControlName="selectedDoctype"
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.selectedDoctype.errors }">
+                                <mat-option>Seleccione una opción</mat-option>
+                                <mat-option *ngFor="let doctype of docTypeList"
+                                    [value]="doctype[0]"
+                                    (click)="checkArgs()">{{doctype[1]}}</mat-option>
+                            </mat-select>
+                            <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!--fin de align-->
+
+
+
+
+
+            </div>
+            <div id="search-button">
+                <button mat-raised-button
+                    color="primary"
+                    class="credix-theme"><i class="material-icons">search</i>Buscar</button>
+            </div>
+        </form>
+
+        <div class="example-container mat-elevation-z8"
+            id="data-table">
+            <div class="example-loading-shade"
+                *ngIf="isLoadingResults">
+                <mat-spinner [diameter]="60"
+                    *ngIf="isLoadingResults"></mat-spinner>
+            </div>
+            <mat-form-field>
+                <input matInput
+                    (keyup)="applyFilter($event.target.value)"
+                    placeholder="Buscar...">
+                <mat-hint>Puedes buscar por cualquier elemento de la lista</mat-hint>
+            </mat-form-field>
+
+            <table mat-table
+                [dataSource]="dataSource"
+                matSort>
+
+
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="consecutiveNumber">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Número de consecutivo </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.consecutiveNumber}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="passwordGenerated">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Clave </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.passwordGenerated}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="billDate">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Fecha de facturación </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.billDate}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="identification">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Identificacion receptor </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.identification}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Nombre receptor </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Correo electrónico </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="moneda">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Moneda </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.moneda}} </td>
+                </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="montoFinal">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Monto final </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.montoFinal}} </td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="tipoPago">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Tipo de documento </th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.tipoPago}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Estado <i class="material-icons"
+                            matTooltip="Este estado se encuentra registrado segun el envio de la factura al sistema de factura electronica hacienda"
+                            [matTooltipPosition]="'right'">
+                            info
+                        </i></th>
+                    <td mat-cell
+                        *matCellDef="let element"> {{element.estado}} </td>
+                </ng-container>
+
+
+                <!-- Symbol Column -->
+
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header> Acciones </th>
+                    <td mat-cell
+                        *matCellDef="let row">
+                        <button (click)="getPdfBill(row.consecutiveNumber)"
+                            class="buttonAction"
+                            matTooltip="Ver PDF">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                        <button (click)="sendBillPDF(row)"
+                            class="buttonAction"
+                            matTooltip="Reenvio">
+                            <mat-icon>send</mat-icon>
+                        </button>
+                        <button (click)="generateCreditNote(row.consecutiveNumber)"
+                            class="buttonAction"
+                            matTooltip="Generar Nota Crédito">
+                            <mat-icon>block</mat-icon>
+                        </button>
+                        <button *ngIf="row.estado == 'Procesado'"
+                            (click)="reprocessBill(row.consecutiveNumber)"
+                            class="buttonAction"
+                            matTooltip="Reprocesar documento electrónico en Hacienda">
+                            <mat-icon>donut_large</mat-icon>
+                        </button>
+                        <button *ngIf="row.estado == 'Rechazado'"
+                            (click)="rejectionMessage(row)"
+                            class="buttonAction"
+                            matTooltip="Visualizar el motivo de rechazo">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </td>
+
+
+                </ng-container>
+
+                <tr mat-header-row
+                    *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row
+                    *matRowDef="let publicServiceReceiptRows; columns: displayedColumns;"></tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+
+    <app-resend-email-modal *ngIf="showModalResendEmail"
+        (closeResendModal)="toggleModalResendEmail()"
+        [selectedReceipt]="selectedReceipt"></app-resend-email-modal>
+
+    <app-rejection-message-modal *ngIf="showModalRejectionMessage"
+        (closeRejectionModal)="toggleModalRejectionMessage()"
+        [selectedReceipt]="selectedReceipt"></app-rejection-message-modal>

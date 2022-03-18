@@ -1,0 +1,85 @@
+#main-header{
+    text-align: left;
+}
+
+.vertical-line{
+    vertical-align: middle;
+    height: 90px;
+}
+
+
+.filter-input{
+    
+    align-content: center;
+    margin: 2%;
+    display: inline-block;
+}
+
+#section-container {
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    background-color: rgb(255, 255, 255);
+    height: auto;
+    width: 96%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#content {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+hr.style-one {
+    border: 0;
+    width: 100%;
+    height: 2px;
+    background: white;
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(221, 27, 27, 0.973), rgb(255, 255, 255));
+}
+
+#search-button{
+    margin: auto;
+    width: 5.7%;
+}
+
+.date-bill{
+    padding-left: 1%;
+    font-size: 14px;
+    color: grey;
+}
+
+.insert-input{
+    width: 50%;
+}
+
+#date-small{
+    width:200px !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=date]::-webkit-inner-spin-button, 
+input[type=date]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}
+
+.credix-theme{
+    background-color: rgba(221, 27, 27, 0.973)
+}

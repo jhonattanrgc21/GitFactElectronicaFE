@@ -1,0 +1,35 @@
+<div class="bill-container">
+
+</div>
+
+<div id="section-container">
+    <div id="content">
+        <h2 id="main-header">Reprocesar Facturas Electrónicas</h2>
+        <hr class="style-one">
+        <br />
+        <br/>
+        <form [formGroup]="myForm" (ngSubmit)="onUpdate()" >
+        
+            <img class="vertical-line" src="../assets/img/vertical-line.png">
+            <div class="filter-input">
+                <mat-form-field class="example-full-width" id="date-small">
+                    <input matInput [matDatepicker]="pickerFrom"  placeholder="Fecha de factura" class="form-control" 
+                        formControlName="billDate" [ngClass]="{ 'is-invalid': submitted && f.dateFrom.errors }"
+                        (keyup.enter)="searchByArgs()">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #pickerFrom></mat-datepicker>
+                    <mat-hint>mm/dd/aaaa</mat-hint>
+                </mat-form-field>
+            </div>
+            <img class="vertical-line" src="../assets/img/vertical-line.png">
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div id="search-button">
+                <button mat-raised-button color="primary" class="credix-theme" [disabled]="!updateButton"><i class="material-icons">cached</i>Reprocesar</button>
+            </div>
+        </form>
+    </div>
+
+</div>

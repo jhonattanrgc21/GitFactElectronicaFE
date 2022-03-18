@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../core/auth/guards/auth.guard";
 import { CreditNoteComponent } from "../credit-note/credit-note.component";
 import { InsertBillComponent } from "../insert-bill/insert-bill.component";
+import { ReprocessBillSComponent } from "../reprocess-bills/reprocess-bills.component";
+import { RecipientsBillComponent } from "../recipients-bill/recipients-bill.component";
 import { PublicServiceComponent } from "../public-service/public-service.component";
 import { MainComponent } from "./main.component";
 
@@ -32,6 +34,17 @@ const routes: Routes = [
         component: InsertBillComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: "reprocessBillS",
+        component: ReprocessBillSComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "recipientsBillS",
+        component: RecipientsBillComponent,
+        canActivate: [AuthGuard],
+      },
+      //
       {
         path: "creditNote/:id",
         component: CreditNoteComponent,
