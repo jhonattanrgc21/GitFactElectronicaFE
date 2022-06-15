@@ -38,6 +38,25 @@ openSnackBar(message: string, action: string) {
   checkArgs() {
   }
 
+  public searchByArgs(): void {
+    this.getElectronicBillsByParams();
+  }
+
+  public getElectronicBillsByParams(): void {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.myForm.invalid  || this.f.billDate.value == "") {
+      this.updateButton=true;
+      this.openSnackBar(
+        "Tiene que escribir una fecha:",
+        "En el espacio indicado"
+      );
+      this.ngOnInit();
+        return;
+    }
+    this.updateBill();
+  }
+
   updateBill(){
     this.updateButton=false;
     this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
