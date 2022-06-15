@@ -13,12 +13,10 @@ export class ReprocessBillSService {
 
 
 updateBillS(billDate) {
-  alert(billDate);
-    const method = '/checkStatus';
-    alert(this.url + method);
+    const method = "/checkStatus";
     return this.http.post(
       this.url + method,
-      JSON.stringify({'bill_date':billDate}),
+      JSON.stringify({bill_date:billDate}),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
   }

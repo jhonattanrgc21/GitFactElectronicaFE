@@ -47,12 +47,13 @@ openSnackBar(message: string, action: string) {
     this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
   
     this.reprocessBillService.updateBillS(this.date).subscribe((data) => {
+      alert(data.toString());
       if (this.f.billDate.value.isEmpty === true || data.toString() === "") {
         this.openSnackBar(
           "No se encontraron datos",
           "Revisa los filtros insertados"
         );
-      }
+      }else{
       this.updateButton=true;
       this.openSnackBar(
         "Se enviaron a procesar todas las facturas de:",
@@ -60,6 +61,7 @@ openSnackBar(message: string, action: string) {
       );
       this.ngOnInit();
       this.changeDetectorRefs.detectChanges();
+      }
     });
   }
 
@@ -67,13 +69,14 @@ openSnackBar(message: string, action: string) {
     this.updateButton=false;
     this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
   
-    this.reprocessBillService.updateBillS(this.date).subscribe((data) => {
-      if (this.f.billDate.value.isEmpty === true || data.toString() === "") {
+    this.reprocessBillService.updateBillS(this.date).subscribe(() => {
+      if (this.date.isEmpty === true ) {
         this.openSnackBar(
           "No se encontraron datos",
           "Revisa los filtros insertados"
         );
-      }
+        this.ngOnInit();
+      }else{
       this.updateButton=true;
       this.openSnackBar(
         "Se enviaron a procesar todas las facturas de:",
@@ -81,6 +84,7 @@ openSnackBar(message: string, action: string) {
       );
       this.ngOnInit();
       this.changeDetectorRefs.detectChanges();
+      }
     });
  
   }
