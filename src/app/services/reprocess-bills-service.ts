@@ -13,7 +13,9 @@ export class ReprocessBillSService {
 
 
 updateBillS(billDate) {
+  alert(billDate);
     const method = '/checkStatus';
+    alert(this.url + method);
     return this.http.post(
       this.url + method,
       JSON.stringify({'bill_date':billDate}),
