@@ -64,7 +64,7 @@ openSnackBar(message: string, action: string) {
     this.reprocessBillService.updateBillS(this.date) 
     this.updateButton=true;
     this.openSnackBar(
-      "Correcto el formato de la fecha y Se procesaron todas las facturas de:",
+      "Se enviaron a procesar todas las facturas de:",
       this.date
     );
     this.ngOnInit();
