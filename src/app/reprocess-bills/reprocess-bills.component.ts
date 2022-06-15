@@ -43,31 +43,46 @@ openSnackBar(message: string, action: string) {
   }
 
   public getElectronicBillsByParams(): void {
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.myForm.invalid  || this.f.billDate.value == "") {
+    this.updateButton=false;
+    this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
+  
+    this.reprocessBillService.updateBillS(this.date).subscribe((data) => {
+      if (this.f.billDate.value.isEmpty === true || data.toString() === "") {
+        this.openSnackBar(
+          "No se encontraron datos",
+          "Revisa los filtros insertados"
+        );
+      }
       this.updateButton=true;
       this.openSnackBar(
-        "Tiene que escribir una fecha:",
-        "En el espacio indicado"
+        "Se enviaron a procesar todas las facturas de:",
+        this.date
       );
       this.ngOnInit();
-        return;
-    }
-    this.updateBill();
+      this.changeDetectorRefs.detectChanges();
+    });
   }
 
   updateBill(){
     this.updateButton=false;
     this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
   
-    this.reprocessBillService.updateBillS(this.date) 
-    this.updateButton=true;
-    this.openSnackBar(
-      "Se enviaron a procesar todas las facturas de:",
-      this.date
-    );
-    this.ngOnInit();
+    this.reprocessBillService.updateBillS(this.date).subscribe((data) => {
+      if (this.f.billDate.value.isEmpty === true || data.toString() === "") {
+        this.openSnackBar(
+          "No se encontraron datos",
+          "Revisa los filtros insertados"
+        );
+      }
+      this.updateButton=true;
+      this.openSnackBar(
+        "Se enviaron a procesar todas las facturas de:",
+        this.date
+      );
+      this.ngOnInit();
+      this.changeDetectorRefs.detectChanges();
+    });
+ 
   }
 
 
