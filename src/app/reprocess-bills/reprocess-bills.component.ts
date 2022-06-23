@@ -44,7 +44,7 @@ openSnackBar(message: string, action: string) {
 
   public getElectronicBillsByParams(): void {
     this.updateButton=false;
-    this.date=[formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en')];
+    this.date=formatDate(this.f.billDate.value, 'yyyy-MM-dd', 'en');
   
     this.reprocessBillService.updateBillS(this.date).subscribe((data) => {
       alert(data.toString());

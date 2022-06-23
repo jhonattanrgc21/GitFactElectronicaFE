@@ -16,7 +16,7 @@ updateBillS(billDate) {
     const method = "/checkStatus";
     return this.http.post(
       this.url + method,
-      JSON.stringify({bill_date:billDate}),
+      JSON.stringify({dateclose:billDate}),
       { headers: new HttpHeaders().set('Content-Type', 'text/plain').set('Accept', '*/*') }
     );
   }
