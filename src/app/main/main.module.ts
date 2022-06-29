@@ -11,6 +11,9 @@ import {
   InsertBillComponent,
   InsertBillAlertDialog,
 } from "../insert-bill/insert-bill.component";
+import {
+  ReprocessBillSComponent
+} from "../reprocess-bills/reprocess-bills.component";
 import { MatConfirmComponent } from "../mat-confirm/mat-confirm.component";
 import { PublicServiceReceiptDetailModalComponent } from "../public-service/modal/public-service-receipt-detail-modal-component/public-service-receipt-detail-modal-component.component";
 import { ToolBarComponent } from "../tool-bar/tool-bar.component";
@@ -35,6 +38,7 @@ import { RejectionMessageModalComponent } from "../public-service/modal/rejectio
     PublicServiceComponent,
     ToolBarComponent,
     InsertBillComponent,
+    ReprocessBillSComponent,
     PublicServiceReceiptDetailModalComponent,
     MatConfirmComponent,
     InsertBillAlertDialog,

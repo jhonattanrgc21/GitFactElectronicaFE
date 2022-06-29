@@ -16,6 +16,10 @@ a {
         display: inline-block
 }
 
+p{
+        font-size: 14px;
+}
+
 li .activated {
                 background-color: #00a8ff;    
 }
@@ -34,6 +38,6 @@ hr.style-one {
     .navbar-labels {
             display: inline-block;
             text-decoration: none;
-            padding-left: 10px;
+            padding-left: 6px;
             
     }
