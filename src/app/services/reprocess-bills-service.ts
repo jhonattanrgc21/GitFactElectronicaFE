@@ -13,7 +13,7 @@ export class ReprocessBillSService {
 
 
 updateBillS(billDate) {
-    const method = "/checkStatus";
+    const method = "/getsendxmlbill";
     return this.http.post(
       this.url + method,
       JSON.stringify({dateclose:billDate}),
