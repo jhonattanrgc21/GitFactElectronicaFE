@@ -28,11 +28,14 @@
     "jspdf": "^1.4.1",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
-    "ngx-file-viewer": "0.0.6",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.3.2",
     "sass": "^1.49.9",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "ngx-file-viewer": "github:mariusc09/ngx-file-viewer",
+    "xlsx": "^0.14.3",
+    "exceljs": "^1.15.0",
+    "file-saver": "^2.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
