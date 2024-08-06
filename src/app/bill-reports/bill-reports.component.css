@@ -68,6 +68,20 @@ hr.style-one {
 
 
 }
+.search-table{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.search-table__button{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+
 table {
     width: 100%;
   }

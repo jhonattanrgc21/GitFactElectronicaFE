@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatSort } from '@angular/material';
 import { MatPaginator } from '@angular/material';
@@ -44,11 +42,9 @@ export class BillReportsComponent implements OnInit {
   constructor(
     private billReportsService: BillReportsService,
     private dialog: MatDialog,
-    private sanitizer: DomSanitizer,
     private changeDetectorRefs: ChangeDetectorRef,
     public snackBar: MatSnackBar,
     private _fb: FormBuilder,
-    private router: Router
   ) {}
 
   onNumberInput(event: Event) {
@@ -154,5 +150,9 @@ export class BillReportsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  export(){
+    this.billReportsService.exportBillReports(this.dataSource.data);
   }
 }
