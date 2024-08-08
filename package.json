@@ -28,7 +28,7 @@
     "jspdf": "^1.4.1",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
-    "ngx-file-viewer": "0.0.6",
+    "ngx-file-viewer": "github:mariusc09/ngx-file-viewer",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.3.2",
     "sass": "^1.49.9",
