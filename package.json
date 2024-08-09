@@ -34,7 +34,7 @@
     "sass": "^1.49.9",
     "zone.js": "~0.8.26",
     "exceljs": "^1.15.0",
-    "file-saver": "^2.0.1"
+    "file-saver": "^2.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",

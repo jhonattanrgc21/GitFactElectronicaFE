@@ -24,6 +24,8 @@ export class BillReportsComponent implements OnInit {
   public isLoadingResults = false;
   tableData: any;
   billReports = new FormControl();
+  public isActLengthCorrect = "true";
+  public isCrdLengthCorrect = "true";
 
   displayedColumns: string[] = [
     "consecutiveNumber",
