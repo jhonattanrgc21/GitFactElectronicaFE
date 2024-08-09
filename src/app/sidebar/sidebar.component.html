@@ -1,29 +1,40 @@
 <nav>
   <ul>
-    <li>
-      <a class="first-item"
-        routerLink="">
-        <i class="material-icons">file_copy</i>
-        <p class="navbar-labels">Consulta Facturas</p>
-      </a>
-      <hr class="style-one">
-    </li>
-    <li>
-      <a class="first-item"
-        routerLink="/insertBill">
-        <i class="material-icons">note_add</i>
-        <p class="navbar-labels">Ingresar Factura</p>
-      </a>
-      <hr class="style-one">
-    </li>
-    <li>
-      <a class="first-item"
-        routerLink="/reprocessBillS">
-        <i class="material-icons">file_copy</i>
-        <p class="navbar-labels">Reprocesar Facturas</p>
-      </a>
-      <hr class="style-one">
-    </li>
-
+    <button class="accordion">Facturas</button>
+    <div class="panel">
+      <li>
+        <a class="first-item"
+          routerLink="">
+          <i class="material-icons">visibility</i>
+          <p class="navbar-labels">Consulta Facturas</p>
+        </a>
+        <hr class="style-one">
+      </li>
+      <li>
+        <a class="first-item"
+          routerLink="/insertBill">
+          <i class="material-icons">add</i>
+          <p class="navbar-labels">Ingresar Factura</p>
+        </a>
+        <hr class="style-one">
+      </li>
+      <li>
+        <a class="first-item"
+          routerLink="/reprocessBillS">
+          <i class="material-icons">settings</i>
+          <p class="navbar-labels">Reprocesar Facturas</p>
+        </a>
+        <hr class="style-one">
+      </li>
+      <li>
+        <a class="first-item"
+          routerLink="/billReports">
+          <i class="material-icons">find_in_page</i>
+          <p class="navbar-labels">Reporteria</p>
+        </a>
+        <hr class="style-one">
+      </li>
+    </div>
   </ul>
+
 </nav>

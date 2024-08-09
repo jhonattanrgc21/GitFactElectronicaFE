@@ -31,7 +31,9 @@
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.3.2",
     "sass": "^1.49.9",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "exceljs": "^1.15.0",
+    "file-saver": "^2.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
@@ -40,7 +42,7 @@
     "@angular/language-service": "^6.1.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "11.11.3",
     "codelyzer": "~4.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

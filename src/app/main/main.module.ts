@@ -1,3 +1,4 @@
+import { BillReportsComponent } from './../bill-reports/bill-reports.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { MainComponent } from "./main.component";
@@ -47,6 +48,7 @@ import { RejectionMessageModalComponent } from "../public-service/modal/rejectio
     CreditNoteAlertDialog,
     ResendEmailModalComponent,
     RejectionMessageModalComponent,
+    BillReportsComponent
   ],
 })
 export class MainModule {}
