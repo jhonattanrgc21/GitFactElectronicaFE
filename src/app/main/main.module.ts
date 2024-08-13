@@ -1,3 +1,4 @@
+import { ReceiversListComponent } from './../receivers-list/receivers-list.component';
 import { BillReportsComponent } from './../bill-reports/bill-reports.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -24,6 +25,7 @@ import { ResendEmailModalComponent } from "../public-service/modal/resend-email-
 import { CreditNoteComponent } from "../credit-note/credit-note.component";
 import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
 import { RejectionMessageModalComponent } from "../public-service/modal/rejection-message-modal/rejection-message-modal.component";
+import { InsertReceiverComponent } from '../insert-receiver/insert-receiver.component';
 
 @NgModule({
   imports: [
@@ -48,7 +50,9 @@ import { RejectionMessageModalComponent } from "../public-service/modal/rejectio
     CreditNoteAlertDialog,
     ResendEmailModalComponent,
     RejectionMessageModalComponent,
-    BillReportsComponent
+    BillReportsComponent,
+    ReceiversListComponent,
+    InsertReceiverComponent
   ],
 })
 export class MainModule {}
