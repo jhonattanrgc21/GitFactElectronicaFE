@@ -15,7 +15,7 @@
                   [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
                 <mat-icon matSuffix>credit_card</mat-icon>
                 <mat-hint>Longitud min: 9 digitos</mat-hint>
-                <mat-error *ngIf="isCrdLengthCorrect=='false'">El número Identificacion debe tener 9 dígitos
+                <mat-error *ngIf="f.identification.errors?.minlength">El número Identificacion debe tener 9 dígitos
                   min</mat-error>
               </mat-form-field>
             </p>
@@ -28,10 +28,11 @@
                 <input matInput (input)="onNumberInput($event)" placeholder="Ingresa el número de cuenta"
                   class="form-control" formControlName="accountNumber"
                   [ngClass]="{ 'is-invalid': submitted && f.accountNumber.errors }">
-                <mat-icon matSuffix>receipt</mat-icon>
-                <mat-hint>Longitud: 7 caracteres</mat-hint>
-                <mat-error *ngIf="isActLengthCorrect=='false'">El número de cuenta debe tener 7
-                  caracteres</mat-error>
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-hint>Longitud de 7 a 10 caracteres</mat-hint>
+                <mat-error *ngIf="f.accountNumber.errors?.minlength">El número de cuenta debe tener mínimo 7 caracteres</mat-error>
+                <mat-error  *ngIf="f.accountNumber.errors?.maxlength">El número de cuenta debe máximo 10 caracteres</mat-error>
+
               </mat-form-field>
             </p>
           </div>
@@ -45,7 +46,7 @@
                   [ngClass]="{ 'is-invalid': submitted && f.establishmentNumber.errors }">
                 <mat-icon matSuffix>receipt</mat-icon>
                 <mat-hint>Longitud: 15 caracteres</mat-hint>
-                <mat-error *ngIf="isActLengthCorrect=='false'">El número del establecimiento debe tener 15
+                <mat-error *ngIf="f.establishmentNumber.errors?.minlength || f.establishmentNumber.errors?.maxlength">El número del establecimiento debe tener 15
                   caracteres</mat-error>
               </mat-form-field>
             </p>
@@ -119,6 +120,23 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Múmero de establecimiento </th>
           <td mat-cell *matCellDef="let element"> {{element.establishmentNumber}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header> Acciones </th>
+          <td mat-cell
+              *matCellDef="let row">
+              <button (click)="''"
+                  class="buttonAction"
+                  matTooltip="Editar Receptor">
+                  <mat-icon>edit</mat-icon>
+              </button>
+          </td>
+
+
+      </ng-container>
+
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let receiversRows; columns: displayedColumns;"></tr>

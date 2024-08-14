@@ -24,8 +24,6 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
   public isLoadingResults = false;
   tableData: any;
   billReports = new FormControl();
-  public isActLengthCorrect = "true";
-  public isCrdLengthCorrect = "true";
 
   displayedColumns: string[] = [
     "identificationTypeDescription",
@@ -34,7 +32,8 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
     "phoneNumber",
     "email",
     "accountNumber",
-    "establishmentNumber"
+    "establishmentNumber",
+    "actions"
   ];
 
   dataSource = new MatTableDataSource<Receiver>();
@@ -47,7 +46,7 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
     private cdref: ChangeDetectorRef
   ) {
     this.myForm = this._fb.group({
-      identification: ["", [Validators.minLength(9),]],
+      identification: ["", [Validators.minLength(9)]],
       accountNumber: [
         "",
         [Validators.minLength(7), Validators.maxLength(10)],
