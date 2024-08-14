@@ -68,19 +68,29 @@ hr.style-one {
 
 
 }
-.search-table{
+
+.flex-align-center{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+}
+
+.flex-justify-between{
+  justify-content:  space-between;
+}
+
+
+.flex-justify-end{
+  justify-content:  space-between;
+}
+
+.search-filters-button{
+  width: 300px;
+  margin: 0 auto;
+}
+
+.search-table{
   padding: 0 15px;
 }
-
-.search-table__button{
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-
 
 table {
     width: 100%;

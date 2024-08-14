@@ -3,7 +3,7 @@
     <h2 id="main-header">Reportes de Facturas Electrónicas</h2>
     <hr class="style-one">
     <p class="content-header">Ingrese el o los filtros a aplicar en la búsqueda</p>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myForm">
       <div id="filters-container">
         <div align="center">
           <div class="filter-input">
@@ -38,44 +38,56 @@
           <img class="vertical-line" src="../assets/img/vertical-line.png">
           <div class="filter-input">
             <mat-form-field class="example-full-width" id="date-small">
-              <input matInput [matDatepicker]="pickerFrom" placeholder="Factura desde" class="form-control"
+              <input matInput [matDatepicker]="pickerFrom" placeholder="Fecha desde" class="form-control"
                 formControlName="dateFrom" [ngClass]="{ 'is-invalid': submitted && f.dateFrom.errors }">
               <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi #pickerFrom></mat-datepicker>
               <mat-hint>mm/dd/aaaa</mat-hint>
+              <mat-error *ngIf="f.dateFrom.errors?.dateFromGreaterThanToday">
+                La fecha desde no puede ser mayor a la fecha actual.
+              </mat-error>
             </mat-form-field>
           </div>
           <img class="vertical-line" src="../assets/img/vertical-line.png">
           <div class="filter-input">
             <mat-form-field class="example-full-width" id="date-small">
-              <input matInput [matDatepicker]="pickerTo" placeholder="Hasta" class="form-control"
+              <input matInput [matDatepicker]="pickerTo" placeholder="Fecha hasta" class="form-control"
                 formControlName="dateTo" [ngClass]="{ 'is-invalid': submitted && f.dateTo.errors }">
               <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi #pickerTo></mat-datepicker>
               <mat-hint>mm/dd/aaaa</mat-hint>
+              <mat-error *ngIf="f.dateTo.errors?.dateToGreaterThanToday">
+                La fecha hasta no puede ser mayor a la fecha actual.
+              </mat-error>
+              <mat-error *ngIf="f.dateTo.errors?.dateToLessThanFrom">
+                La fecha hasta debe ser mayor o igual a la fecha desde.
+              </mat-error>
             </mat-form-field>
           </div>
-
         </div>
         <!--fin de align-->
       </div>
-      <div id="search-button">
-        <button mat-raised-button [disabled]="isFilterNotExists() || myForm.invalid || isDateRangeInvalid()"
+
+      <div class="flex-align-center flex-justify-between search-filters-button">
+        <button (click)="onSubmit()" mat-raised-button [disabled]="isFilterNotExists() || myForm.invalid || isDateRangeInvalid()"
           color="primary" class="credix-theme"><i class="material-icons">search</i>Buscar</button>
+        <button (click)="onClean()" mat-raised-button [disabled]="isFilterNotExists() && dataSource.data.length == 0"
+          color="primary" class="credix-theme"><i class="material-icons">restart_alt</i>Limpiar</button>
       </div>
+
     </form>
     <div class="example-container mat-elevation-z8" id="data-table">
       <div class="example-loading-shade" *ngIf="isLoadingResults">
         <mat-spinner [diameter]="60" *ngIf="isLoadingResults"></mat-spinner>
       </div>
 
-      <div class="search-table">
+      <div class="flex-align-center flex-justify-between  search-table">
         <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+          <input [disabled]="dataSource.data.length == 0"  matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
           <mat-hint>Puedes buscar por cualquier elemento de la lista</mat-hint>
         </mat-form-field>
 
-        <div class="search-table__button"  >
+        <div class="flex-align-center flex-justify-end "  >
           <button (click)="export()" [disabled]="dataSource.data.length == 0" mat-raised-button  color="primary" class="credix-theme"><mat-icon>file_download</mat-icon> Exportar</button>
         </div>
       </div>
@@ -139,7 +151,7 @@
 
         <ng-container matColumnDef="stateBill">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado <i class="material-icons"
-              matTooltip="Este estado se encuentra registrado segun el envio de la factura al sistema de factura electronica hacienda"
+              matTooltip="Este estado se encuentra registrado según el envio de la factura al sistema de factura electrónica de hacienda"
               [matTooltipPosition]="'right'">
               info
             </i></th>
