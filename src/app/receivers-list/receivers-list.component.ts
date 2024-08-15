@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatSort } from '@angular/material';
 import { MatPaginator } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -43,10 +44,11 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
     private changeDetectorRefs: ChangeDetectorRef,
     public snackBar: MatSnackBar,
     private _fb: FormBuilder,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private router: Router
   ) {
     this.myForm = this._fb.group({
-      identification: ["", [Validators.minLength(9)]],
+      identification: ["", Validators.minLength(9)],
       accountNumber: [
         "",
         [Validators.minLength(7), Validators.maxLength(10)],
@@ -149,5 +151,10 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  onEditReceiver(id: number){
+    // TODO: crear un pop-up para confirmar la edicion
+    this.router.navigate(['/receptor-form', id]);
   }
 }

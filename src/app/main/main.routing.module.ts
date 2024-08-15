@@ -58,7 +58,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: "insertReceiver",
+        path: "receptor-form",
+        component: InsertReceiverComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "receptor-form/:id",
         component: InsertReceiverComponent,
         canActivate: [AuthGuard],
       },
