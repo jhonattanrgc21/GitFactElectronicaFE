@@ -8,12 +8,13 @@
     <hr class="style-one">
     <br/>
     <form [formGroup]="myForm">
+      <pre>{{myForm.value | json}}</pre>
       <mat-label class="date-bill" > Tipo de identificación </mat-label><br/>
       <mat-form-field class="insert-input">
         <mat-select placeholder="Seleccione una opción" formControlName="identificationTypeId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identificationTypeId.errors }">
           <mat-option *ngFor="let identificationType of identificationTypelist" [value]="identificationType.id">{{identificationType.description}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="f.identificationTypeId.errors.required">Seleccione un tipo de identificación</mat-error>
+        <mat-error *ngIf="f.identificationTypeId.errors?.required">Seleccione un tipo de identificación</mat-error>
       </mat-form-field>
 
 

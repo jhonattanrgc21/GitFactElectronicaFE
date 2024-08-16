@@ -14,9 +14,10 @@ import { emailPattern, lettersPattern, numericPattern } from 'src/app/core/const
 export class InsertReceiverComponent implements OnInit {
   titleForm: string;
   myForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
   insertResponse: any;
   identificationTypelist: any = [];
+  isLoadingResults: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,8 +42,9 @@ export class InsertReceiverComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getIndentificationTypeList();
     const receiverId = this.route.snapshot.paramMap.get('id');
-    if(receiverId) this.titleForm = 'Edicion del Receptor';
+    if (receiverId) this.titleForm = 'Edicion del Receptor';
     else this.titleForm = 'Ingreso del Receptor';
   }
 
@@ -50,10 +52,17 @@ export class InsertReceiverComponent implements OnInit {
     return this.myForm.controls;
   }
 
-
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
+    });
+  }
+
+  getIndentificationTypeList() {
+    this.isLoadingResults = true;
+    this.receiversService.getlistidentificationtype().subscribe(res => {
+      this.isLoadingResults = false;
+      this.identificationTypelist = res
     });
   }
 
