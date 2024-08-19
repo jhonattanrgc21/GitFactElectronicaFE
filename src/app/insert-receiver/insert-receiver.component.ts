@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { emailPattern, lettersPattern, numericPattern } from 'src/app/core/constants/pattherns';
+import { AuthService } from '../core/auth/services/auth/auth.service';
+import { IdentificationType } from './interfaces/identification-type.interface';
 
 @Component({
   selector: 'app-insert-receiver',
@@ -16,7 +18,7 @@ export class InsertReceiverComponent implements OnInit {
   myForm: FormGroup;
   submitted: boolean = false;
   insertResponse: any;
-  identificationTypelist: any = [];
+  identificationTypelist: IdentificationType[] = [];
   isLoadingResults: boolean = false;
 
   constructor(
@@ -26,7 +28,8 @@ export class InsertReceiverComponent implements OnInit {
     public snackBar: MatSnackBar,
     private _fb: FormBuilder,
     private receiversService: ReceiversService,
-    private validatorFormService: ValidatorFormService
+    private validatorFormService: ValidatorFormService,
+    private authService: AuthService
   ) {
 
     this.myForm = this._fb.group({
@@ -42,7 +45,7 @@ export class InsertReceiverComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getIndentificationTypeList();
+    this.identificationTypelist = this.route.snapshot.data['identificationtypelist'];
     const receiverId = this.route.snapshot.paramMap.get('id');
     if (receiverId) this.titleForm = 'Edicion del Receptor';
     else this.titleForm = 'Ingreso del Receptor';
@@ -58,15 +61,8 @@ export class InsertReceiverComponent implements OnInit {
     });
   }
 
-  getIndentificationTypeList() {
-    this.isLoadingResults = true;
-    this.receiversService.getlistidentificationtype().subscribe(res => {
-      this.isLoadingResults = false;
-      this.identificationTypelist = res
-    });
-  }
-
   onSubmit(){
+    const username = this.authService.getUsername();
     let formObj = this.myForm.value;
     formObj.identification = formObj.identification.trim();
     formObj.name = formObj.name.trim();

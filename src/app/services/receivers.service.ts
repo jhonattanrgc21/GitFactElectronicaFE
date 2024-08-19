@@ -3,6 +3,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { CreateReceiver } from '../insert-receiver/interfaces/create-receiver.interface';
+import { UpdateReceiver } from '../insert-receiver/interfaces/update-receiver.interface';
 
 
 @Injectable({
@@ -49,6 +51,32 @@ export class ReceiversService {
       map((response: any[]) =>
         response.filter(item => item.id >= 1 && item.id <= 3)
       )
+    );
+  }
+
+  createReceiver(newReceiver: CreateReceiver){
+    const method = "/createreceiver";
+    return this.http.post(
+      this.url + method,
+      JSON.stringify(newReceiver),
+      {
+        headers: new HttpHeaders()
+          .set("Content-Type", "text/plain")
+          .set("Accept", "*/*"),
+      }
+    );
+  }
+
+  updateReceiver(editReceiver: UpdateReceiver){
+    const method = "/updatereceiver";
+    return this.http.post(
+      this.url + method,
+      JSON.stringify(editReceiver),
+      {
+        headers: new HttpHeaders()
+          .set("Content-Type", "text/plain")
+          .set("Accept", "*/*"),
+      }
     );
   }
 }
