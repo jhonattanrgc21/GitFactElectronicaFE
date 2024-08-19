@@ -79,4 +79,18 @@ export class ReceiversService {
       }
     );
   }
+
+
+  getReceiverById(receiverId: number){
+    const method = "/getreceiver";
+    return this.http.post(
+      this.url + method,
+      JSON.stringify({receiverId}),
+      {
+        headers: new HttpHeaders()
+          .set("Content-Type", "text/plain")
+          .set("Accept", "*/*"),
+      }
+    );
+  }
 }
