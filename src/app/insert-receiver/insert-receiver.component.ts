@@ -38,7 +38,7 @@ export class InsertReceiverComponent implements OnInit {
   ) {
 
     this.myForm = this._fb.group({
-      id: [],
+      receiverId: [],
       identificationTypeId: ['', Validators.required],
       identification: ['', [Validators.required, Validators.minLength(9), this.validatorFormService.noWhitespaceValidator()]],
       name: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(80), this.validatorFormService.noWhitespaceValidator(), this.validatorFormService.alphanumericValidator()]],
@@ -69,7 +69,7 @@ export class InsertReceiverComponent implements OnInit {
       this.receiversService.getReceiverById(this.receiverId).subscribe((res: any) => {
         if (res.type == 'success') {
           const receiverData = res.receiver;
-          this.f['id'].setValue(receiverData.id);
+          this.f['receiverId'].setValue(receiverData.id);
           this.f['identificationTypeId'].setValue(receiverData.identificationTypeId);
           this.f['identification'].setValue(receiverData.identification);
           this.f['name'].setValue(receiverData.name);
