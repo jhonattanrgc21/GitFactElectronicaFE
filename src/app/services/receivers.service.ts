@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { CreateReceiver } from '../insert-receiver/interfaces/create-receiver.interface';
 import { UpdateReceiver } from '../insert-receiver/interfaces/update-receiver.interface';
+import { AuthService } from '../core/auth/services/auth/auth.service';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class ReceiversService {
 
   url = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getReceiversFilter(
     accountNumber,
@@ -56,25 +57,29 @@ export class ReceiversService {
 
   createReceiver(newReceiver: CreateReceiver){
     const method = "/createreceiver";
+    const token = this.authService.geToken();
     return this.http.post(
       this.url + method,
       JSON.stringify(newReceiver),
       {
         headers: new HttpHeaders()
           .set("Content-Type", "text/plain")
-          .set("Accept", "*/*"),
+          .set("Accept", "*/*")
+          .set("X-AUTH-TOKEN", token),
       }
     );
   }
 
   updateReceiver(editReceiver: UpdateReceiver){
     const method = "/updatereceiver";
+    const token = this.authService.geToken();
     return this.http.post(
       this.url + method,
       JSON.stringify(editReceiver),
       {
         headers: new HttpHeaders()
           .set("Content-Type", "text/plain")
+          .set("X-AUTH-TOKEN", token)
           .set("Accept", "*/*"),
       }
     );

@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { ReceiversService } from '../services/receivers.service';
 import { DataReceivers, Receiver } from './interfaces/data-receivers.interface';
+import { ViewportRuler } from '@angular/cdk/scrolling';
+import { ConfirmEditionPopupComponent } from './components/confirm-edition-popup/confirm-edition-popup.component';
 
 @Component({
   selector: 'app-receivers-list',
@@ -40,7 +42,8 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
   dataSource = new MatTableDataSource<Receiver>();
   constructor(
     private receiversService: ReceiversService,
-    private dialog: MatDialog,
+		private dialog: MatDialog,
+		private viewportRuler: ViewportRuler,
     private changeDetectorRefs: ChangeDetectorRef,
     public snackBar: MatSnackBar,
     private _fb: FormBuilder,
@@ -154,7 +157,16 @@ export class ReceiversListComponent implements OnInit, AfterViewChecked {
   }
 
   onEditReceiver(id: number){
-    // TODO: crear un pop-up para confirmar la edicion
-    this.router.navigate(['/receptor-form', id]);
+		const viewportSize = this.viewportRuler.getViewportSize();
+		const dialogRef = this.dialog.open(ConfirmEditionPopupComponent, {
+			width: viewportSize.width < 768 ? '380px' : '474px',
+			height: 'auto',
+			autoFocus: false,
+		});
+
+		dialogRef.afterClosed().subscribe((result: any) => {
+			if (result)   this.router.navigate(['/receptor-form', id]);
+		});
   }
+
 }

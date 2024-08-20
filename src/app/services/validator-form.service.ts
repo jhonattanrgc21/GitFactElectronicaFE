@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ValidatorFormService {
 	}
 
   alphanumericValidator(): ValidatorFn {
-    const regex: RegExp = /^[a-zA-ZÀ-ÖØ-öø-ÿÑñÄäËëÏïÖöÜüŸÿ\s]*$/;
+    const regex: RegExp = /^[a-zA-ZÀ-ÖØ-öø-ÿÑñÄäËëÏïÖöÜüŸÿ\s.,]*$/;
     return (control: AbstractControl): { [key: string]: any } | null => {
       const isValid = regex.test(control.value);
       return isValid ? null : { invalidCharacter: true };
@@ -29,6 +29,15 @@ export class ValidatorFormService {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const isValid = regex.test(control.value);
       return isValid ? null : { invalidNumber: true };
+    };
+  }
+
+  applyConditionalValidators(validators: ValidatorFn[]): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        return Validators.compose(validators)(control);
+      }
+      return null;
     };
   }
 }

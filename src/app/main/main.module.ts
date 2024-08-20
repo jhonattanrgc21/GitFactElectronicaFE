@@ -26,6 +26,9 @@ import { CreditNoteComponent } from "../credit-note/credit-note.component";
 import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
 import { RejectionMessageModalComponent } from "../public-service/modal/rejection-message-modal/rejection-message-modal.component";
 import { InsertReceiverComponent } from '../insert-receiver/insert-receiver.component';
+import { ConfirmEditionPopupComponent } from '../receivers-list/components/confirm-edition-popup/confirm-edition-popup.component';
+import { AlertPopupComponent } from '../insert-receiver/components/alert-popup/alert-popup.component';
+import { IdentificationMaskDirective } from '../shared/directives/identification-mask.directive';
 
 @NgModule({
   imports: [
@@ -33,8 +36,9 @@ import { InsertReceiverComponent } from '../insert-receiver/insert-receiver.comp
     MainRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
+  exports: [IdentificationMaskDirective],
   declarations: [
     MainComponent,
     SidebarComponent,
@@ -52,7 +56,10 @@ import { InsertReceiverComponent } from '../insert-receiver/insert-receiver.comp
     RejectionMessageModalComponent,
     BillReportsComponent,
     ReceiversListComponent,
-    InsertReceiverComponent
+    InsertReceiverComponent,
+    ConfirmEditionPopupComponent,
+    AlertPopupComponent,
+    IdentificationMaskDirective
   ],
 })
 export class MainModule {}

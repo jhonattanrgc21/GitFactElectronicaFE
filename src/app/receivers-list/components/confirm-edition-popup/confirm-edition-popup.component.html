@@ -1,0 +1,27 @@
+<div class="modal-content">
+
+  <div class="header-modal">
+    <div class="flex-row">
+      <div class="flex-col center">
+        <h2 mat-dialog-title>¿Está seguro de que desea editar este receptor?</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-modal">
+    <div class="flex-row center">
+      <div class="flex-col center">
+        <button mat-raised-button
+          color="primary"
+          class="credix-theme"
+          (click)="onClose()">No</button>
+      </div>
+      <div class="flex-col center">
+        <button mat-raised-button
+          color="primary"
+          class="credix-theme"
+          (click)="onConfirm()">Si, editar</button>
+      </div>
+    </div>
+  </div>
+</div>
