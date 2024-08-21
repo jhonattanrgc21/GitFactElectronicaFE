@@ -66,7 +66,6 @@ export class InsertReceiverComponent implements OnInit {
     });
   }
 
-
   private updateIdentificationValidators(typeId: number) {
     const identificationControl = this.myForm.get('identification');
 
@@ -110,6 +109,7 @@ export class InsertReceiverComponent implements OnInit {
     // Actualizar validaciones
     identificationControl.updateValueAndValidity();
   }
+
 
   ngOnInit() {
     this.identificationTypelist = this.activateRoute.snapshot.data['identificationtypelist'];
@@ -187,9 +187,9 @@ export class InsertReceiverComponent implements OnInit {
       establishmentNumber: this.myForm.value.establishmentNumber.trim(),
     };
 
-    // const receiverAction$ = this.receiverId
-    //   ? this.receiversService.updateReceiver(formObj as UpdateReceiver)
-    //   : this.receiversService.createReceiver(formObj as CreateReceiver);
+   const receiverAction$ = this.receiverId
+      ? this.receiversService.updateReceiver(formObj as UpdateReceiver)
+      : this.receiversService.createReceiver(formObj as CreateReceiver);
 
     // receiverAction$.subscribe((res: ReceiverResponse) => {
     //   this.isLoadingResults = false;
