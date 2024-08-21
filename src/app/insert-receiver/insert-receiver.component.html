@@ -1,0 +1,76 @@
+<div class="bill-container">
+
+</div>
+
+<div id="section-container">
+  <div id="content">
+    <h2 id="main-header">{{ titleForm }}</h2>
+    <hr class="style-one">
+    <br/>
+    <form [formGroup]="myForm">
+      <mat-label class="date-bill" > Tipo de identificación </mat-label><br/>
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Seleccione una opción" formControlName="identificationTypeId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identificationTypeId.errors }">
+          <mat-option *ngFor="let identificationType of identificationTypelist" [value]="identificationType.id">{{identificationType.description}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.identificationTypeId.errors?.required">Seleccione un tipo de identificación</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Identificación</mat-label>
+        <input matInput formControlName="identification" class="form-control" [appIdentificationMask]="f.identificationTypeId.value" [ngClass]="{ 'is-invalid': submitted && f.identification.errors }">
+        <mat-error *ngIf="f.identification.errors?.required">La identificación es requerida</mat-error>
+        <mat-error *ngIf="f.identification.errors?.minlength">El número de identificacion debe tener 9 dígitos min</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+        <mat-error *ngIf="f.name.errors?.required">El nombre es obligatorio</mat-error>
+        <mat-error *ngIf="f.name.errors?.invalidCharacter">Este campo no admite valores númericos </mat-error>
+        <mat-error *ngIf="f.name.errors?.minlength">El nombre debe tener mínimo 15 caracteres</mat-error>
+        <mat-error *ngIf="f.name.errors?.maxlength">El nombre debe tener máximo 80 caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }">
+        <mat-error *ngIf="f.phoneNumber.errors?.invalidNumber">Este campo solo admite valores numéricos</mat-error>
+        <mat-error *ngIf="f.phoneNumber.errors?.required">El número de teléfono es obligatorio</mat-error>
+        <mat-error *ngIf="f.phoneNumber.errors?.minlength || f.phoneNumber.errors?.maxlength">El número de teléfono debe tener 8 digitos</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput formControlName="email" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <mat-error *ngIf="f.email.errors?.required">El correo electrónico es obligatorio</mat-error>
+        <mat-error *ngIf="f.email.errors?.email || f.email.errors?.pattern">El formato del correo electrónico es
+          inválido</mat-error>
+        <mat-error *ngIf="f.email.errors?.maxlength">El correo electrónico debe tener máximo 50 caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Número de cuenta</mat-label>
+        <input matInput formControlName="accountNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.accountNumber.errors }">
+        <mat-error *ngIf="f.accountNumber.errors?.invalidNumber">Este campo solo admite valores numéricos</mat-error>
+        <mat-error *ngIf="f.accountNumber.errors?.minlength">El número de cuenta debe tener 7 dígitos mínimo</mat-error>
+        <mat-error *ngIf="f.accountNumber.errors?.maxlength">El número de cuenta debe tener 10 dígitos máximo</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="insert-input">
+        <mat-label>Número del Establecimiento</mat-label>
+        <input matInput formControlName="establishmentNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.establishmentNumber.errors }">
+        <mat-error *ngIf="f.establishmentNumber.errors?.invalidNumber">Este campo solo admite valores numéricos</mat-error>
+        <mat-error *ngIf="f.establishmentNumber.errors?.minlength || f.establishmentNumber.errors?.maxlength">
+          El número del establecimiento debe tener 15 dígitos
+        </mat-error>
+      </mat-form-field>
+
+      <div id="search-button">
+        <button (click)="onSubmit()" mat-raised-button color="primary" class="credix-theme" [disabled]="myForm.invalid"><i class="material-icons">add_circle</i>Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
