@@ -40,8 +40,8 @@ export class InsertReceiverComponent implements OnInit {
     this.myForm = this._fb.group({
       receiverId: [],
       identificationTypeId: ['', Validators.required],
-      identification: ['', [Validators.required, Validators.minLength(9), this.validatorFormService.noWhitespaceValidator()]],
-      name: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(80), this.validatorFormService.noWhitespaceValidator(), this.validatorFormService.alphanumericValidator()]],
+      identification: ['', [Validators.required, Validators.minLength(9),  this.validatorFormService.noWhitespaceValidator()]],
+      name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(80), this.validatorFormService.noWhitespaceValidator(), this.validatorFormService.alphanumericValidator()]],
       phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.pattern(numericPattern), Validators.maxLength(8), this.validatorFormService.noWhitespaceValidator(), this.validatorFormService.numericValidator()]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50), this.validatorFormService.noWhitespaceValidator()]],
       accountNumber: ['', this.validatorFormService.applyConditionalValidators([
@@ -59,7 +59,57 @@ export class InsertReceiverComponent implements OnInit {
         this.validatorFormService.numericValidator()
       ])],
     });
+
+    // Escucha cambios en identificationTypeId
+    this.myForm.get('identificationTypeId').valueChanges.subscribe(typeId => {
+      this.updateIdentificationValidators(typeId);
+    });
   }
+
+  private updateIdentificationValidators(typeId: number) {
+    const identificationControl = this.myForm.get('identification');
+
+    if (!identificationControl) return;
+
+    // Limpiar validadores anteriores
+    identificationControl.clearValidators();
+
+    switch (typeId) {
+      case 1: // Cédula Nacional
+        identificationControl.setValidators([
+          Validators.minLength(11),
+          Validators.maxLength(11),
+          this.validatorFormService.noWhitespaceValidator()
+        ]);
+        break;
+
+      case 2: // Cédula Jurídica
+        identificationControl.setValidators([
+          Validators.minLength(12),
+          Validators.maxLength(12),
+          this.validatorFormService.noWhitespaceValidator()
+        ]);
+        break;
+
+      case 3: // Cédula de Residencia
+        identificationControl.setValidators([
+          Validators.minLength(12),
+          Validators.maxLength(12),
+          this.validatorFormService.noWhitespaceValidator()
+        ]);
+        break;
+
+
+
+      default:
+        identificationControl.setValidators([Validators.required]);
+        break;
+    }
+
+    // Actualizar validaciones
+    identificationControl.updateValueAndValidity();
+  }
+
 
   ngOnInit() {
     this.identificationTypelist = this.activateRoute.snapshot.data['identificationtypelist'];
@@ -85,6 +135,24 @@ export class InsertReceiverComponent implements OnInit {
 
   get f() {
     return this.myForm.controls;
+  }
+
+  getMinLength(controlName: string): number | null {
+    const control = this.myForm.get(controlName);
+    const identificationTypeControl = this.myForm.get('identificationTypeId');
+
+    if (control && control.errors && control.errors['minlength']) {
+      const requiredLength = control.errors['minlength'].requiredLength;
+      const identificationType = identificationTypeControl ? identificationTypeControl.value : null;
+
+      if (identificationType === 1 || identificationType === 2) {
+        return requiredLength - 2;
+      } else {
+        return requiredLength;
+      }
+    }
+
+    return null;
   }
 
   openSnackBar(message: string, action: string) {
@@ -120,7 +188,7 @@ export class InsertReceiverComponent implements OnInit {
       establishmentNumber: this.myForm.value.establishmentNumber.trim(),
     };
 
-    const receiverAction$ = this.receiverId
+   const receiverAction$ = this.receiverId
       ? this.receiversService.updateReceiver(formObj as UpdateReceiver)
       : this.receiversService.createReceiver(formObj as CreateReceiver);
 
