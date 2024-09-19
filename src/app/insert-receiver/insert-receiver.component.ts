@@ -191,11 +191,11 @@ export class InsertReceiverComponent implements OnInit {
       ? this.receiversService.updateReceiver(formObj as UpdateReceiver)
       : this.receiversService.createReceiver(formObj as CreateReceiver);
 
-    // receiverAction$.subscribe((res: ReceiverResponse) => {
-    //   this.isLoadingResults = false;
-    //   if (res.type !== 'error')  this.openAlertdialog(res.message);
-    //   else  this.openSnackBar(res.message, "");
-    // });
+    receiverAction$.subscribe((res: ReceiverResponse) => {
+      this.isLoadingResults = false;
+      if (res.type !== 'error')  this.openAlertdialog(res.message);
+      else  this.openSnackBar(res.message, "");
+    });
   }
 
 }
