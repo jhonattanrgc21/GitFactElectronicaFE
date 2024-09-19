@@ -1,4 +1,3 @@
-import { BillReportsComponent } from './../bill-reports/bill-reports.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../core/auth/guards/auth.guard";
@@ -26,11 +25,6 @@ const routes: Routes = [
       {
         path: "billList",
         component: PublicServiceComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: "billReports",
-        component: BillReportsComponent,
         canActivate: [AuthGuard],
       },
       {

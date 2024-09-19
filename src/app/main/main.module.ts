@@ -1,5 +1,4 @@
 import { ReceiversListComponent } from './../receivers-list/receivers-list.component';
-import { BillReportsComponent } from './../bill-reports/bill-reports.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { MainComponent } from "./main.component";
@@ -54,7 +53,6 @@ import { IdentificationMaskDirective } from '../shared/directives/identification
     CreditNoteAlertDialog,
     ResendEmailModalComponent,
     RejectionMessageModalComponent,
-    BillReportsComponent,
     ReceiversListComponent,
     InsertReceiverComponent,
     ConfirmEditionPopupComponent,
