@@ -115,7 +115,7 @@ export class InsertReceiverComponent implements OnInit {
     this.identificationTypelist = this.activateRoute.snapshot.data['identificationtypelist'];
     this.receiverId = +this.activateRoute.snapshot.paramMap.get('id');
     if (this.receiverId) {
-      this.titleForm = 'Edicion del Receptor';
+      this.titleForm = 'Edición del Receptor';
       this.receiversService.getReceiverById(this.receiverId).subscribe((res: any) => {
         if (res.type == 'success') {
           const receiverData = res.receiver;

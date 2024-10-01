@@ -43,7 +43,7 @@
       </mat-form-field>
 
       <mat-form-field class="insert-input">
-        <mat-label>Correo Electrónico</mat-label>
+        <mat-label>Correo electrónico</mat-label>
         <input matInput formControlName="email" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
         <mat-error *ngIf="f.email.errors?.required">El correo electrónico es obligatorio</mat-error>
@@ -62,7 +62,7 @@
 
 
       <mat-form-field class="insert-input">
-        <mat-label>Número del Establecimiento</mat-label>
+        <mat-label>Número del establecimiento</mat-label>
         <input matInput formControlName="establishmentNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.establishmentNumber.errors }">
         <mat-error *ngIf="f.establishmentNumber.errors?.invalidNumber">Este campo solo admite valores numéricos</mat-error>
         <mat-error *ngIf="f.establishmentNumber.errors?.minlength || f.establishmentNumber.errors?.maxlength">
