@@ -6,6 +6,8 @@ import { InsertBillComponent } from "../insert-bill/insert-bill.component";
 import { ReprocessBillSComponent } from "../reprocess-bills/reprocess-bills.component";
 import { PublicServiceComponent } from "../public-service/public-service.component";
 import { MainComponent } from "./main.component";
+import { CodopsListComponent } from "../codops-list/codops-list.component";
+import { InsertCodopComponent } from "../insert-codop/insert-codop.component";
 
 const routes: Routes = [
   {
@@ -38,10 +40,19 @@ const routes: Routes = [
         component: ReprocessBillSComponent,
         canActivate: [AuthGuard],
       },
-      //
       {
         path: "creditNote/:id",
         component: CreditNoteComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "codopsList",
+        component: CodopsListComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "codop-form",
+        component: InsertCodopComponent,
         canActivate: [AuthGuard],
       },
     ],

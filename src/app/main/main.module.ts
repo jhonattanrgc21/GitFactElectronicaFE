@@ -23,6 +23,8 @@ import { ResendEmailModalComponent } from "../public-service/modal/resend-email-
 import { CreditNoteComponent } from "../credit-note/credit-note.component";
 import { CreditNoteAlertDialog } from "../credit-note/credit-note-alert-dialog";
 import { RejectionMessageModalComponent } from "../public-service/modal/rejection-message-modal/rejection-message-modal.component";
+import { CodopsListComponent } from "../codops-list/codops-list.component";
+import { InsertCodopComponent } from '../insert-codop/insert-codop.component';
 
 @NgModule({
   imports: [
@@ -47,6 +49,8 @@ import { RejectionMessageModalComponent } from "../public-service/modal/rejectio
     CreditNoteAlertDialog,
     ResendEmailModalComponent,
     RejectionMessageModalComponent,
+    CodopsListComponent,
+    InsertCodopComponent
   ],
 })
 export class MainModule {}

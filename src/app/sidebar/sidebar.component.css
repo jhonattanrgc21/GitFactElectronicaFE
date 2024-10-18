@@ -1,43 +1,86 @@
 nav {
-    background: #2D2E2E;
-    height: 100%;
+  background: #2D2E2E;
+  height: 100%;
 }
 
 ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
 }
 
 a {
-        color: #fff;
-        padding-right: 10px;
-        padding-left: 5px;
-        display: inline-block
+      color: #fff;
+      padding-right: 10px;
+      padding-left: 5px;
+      display: inline-block
 }
 
 p{
-        font-size: 14px;
+      font-size: 12px;
 }
 
 li .activated {
-                background-color: #00a8ff;    
+              background-color: #00a8ff;
 }
 
 hr.style-one {
-        border: 0;
-        height: 1px;
-        background: white;
-        background-image: linear-gradient(to right, #333, #ccc, #333);
+      border: 0;
+      height: 1px;
+      background: white;
+      background-image: linear-gradient(to right, #333, #ccc, #333);
+  }
+
+  .first-item{
+      padding: 0px;
+      padding-top: 10px
+  }
+
+  .navbar-labels {
+          display: inline-block;
+          text-decoration: none;
+          padding-left: 6px;
+
+  }
+
+  .material-icons{
+      font-size: 15px;
+  }
+
+
+.accordion {
+      background-color: #2D2E2E;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      transition: 0.4s;
+      font-size: 14px;
     }
 
-    .first-item{
-            padding-top: 10px
+    .active, .accordion:hover {
+      background-color: #3c3d3d;
     }
 
-    .navbar-labels {
-            display: inline-block;
-            text-decoration: none;
-            padding-left: 6px;
-            
+    .panel {
+      padding: 0 18px;
+      background-color: #2D2E2E;
+      display: none;
+      overflow: hidden;
+      color: rgb(255, 255, 255);
+    }
+
+    .accordion:after {
+      content: '\02795';
+      font-size: 13px;
+      color: rgb(255, 255, 255);
+      float: right;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\2796";
     }
