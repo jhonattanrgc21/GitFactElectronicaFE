@@ -1,4 +1,4 @@
-import { MatButtonModule, MatCheckboxModule } from "@angular/material";
+import { MatButtonModule, MatCheckboxModule, MatSlideToggleModule } from "@angular/material";
 import { NgModule } from "@angular/core";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -53,6 +53,7 @@ import { MatCardModule } from "@angular/material/card";
     MatTooltipModule,
     MatDialogModule,
     MatListModule,
+    MatSlideToggleModule
   ],
 })
 export class MaterialModule {}

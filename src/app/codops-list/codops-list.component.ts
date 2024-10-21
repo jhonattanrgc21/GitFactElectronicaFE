@@ -1,3 +1,4 @@
+import { GeneralResponse } from './../shared/interfaces/generalResponse.interface';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CodopsService } from '../services/codops.service';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
@@ -7,6 +8,8 @@ import { ViewportRuler } from '@angular/cdk/scrolling';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceCode } from './interfaces/service-code.interface';
 import { CodopFilter } from './interfaces/codop-filter.interface';
+import { ActiveCodop } from './interfaces/active-codop.interface';
+import { ConfirmationPopupComponent } from '../shared/components/confirmation-popup/confirmation-popup.component';
 
 @Component({
   selector: 'app-codops-list',
@@ -140,4 +143,59 @@ export class CodopsListComponent implements OnInit, AfterViewChecked {
       this.setCodopTable();
     });
   }
+
+  onToggleClick(element: Codop, event: MouseEvent) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const currentStatus = element.isActive;
+    const isChecked = element.isActive == 1 ? false : true;
+
+    let activeCodop: ActiveCodop = {
+      codopId: element.codopId,
+      isActive: isChecked ? 1 : 0
+    };
+
+    const message: string = isChecked
+      ? '¿Está seguro de que desea activar este codop?'
+      : '¿Está seguro de que desea desactivar este codop?';
+
+    const viewportSize = this.viewportRuler.getViewportSize();
+
+    const dialogRef = this.dialog.open(ConfirmationPopupComponent, {
+      width: viewportSize.width < 768 ? '380px' : '474px',
+      height: 'auto',
+      autoFocus: false,
+      data: {
+        message,
+        messageTitleButtonLeft: 'Cancelar',
+        messageTitleButtonRight: isChecked ? 'Activar' : 'Desactivar'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.isLoadingResults = true;
+
+        this.codopsService.modifyCodopStatus(activeCodop).subscribe(
+          (res: GeneralResponse) => {
+            this.isLoadingResults = false;
+
+            if (res.type !== 'error') {
+              element.isActive = activeCodop.isActive;
+              this.openSnackBar(res.message, '');
+            } else {
+              this.openSnackBar('Error', res.message);
+            }
+          },
+          (err) => {
+            this.isLoadingResults = false;
+            this.openSnackBar('Error', 'No se pudo cambiar el estado del codop.');
+          }
+        );
+      }
+    });
+  }
+
 }
