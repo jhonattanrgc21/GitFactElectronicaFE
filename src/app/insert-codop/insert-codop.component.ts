@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CodopsService } from '../services/codops.service';
 
 @Component({
   selector: 'app-insert-codop',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InsertCodopComponent implements OnInit {
 
-  constructor() { }
+  constructor(private codopsService: CodopsService) { }
 
   ngOnInit() {
   }

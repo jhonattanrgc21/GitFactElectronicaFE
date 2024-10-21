@@ -3,17 +3,17 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Resolve } from '@angular/router';
 import { CodopsService } from 'src/app/services/codops.service';
-import { CodopList } from '../interfaces/codops-List.interface';
 import { CodopFilter } from '../interfaces/codop-filter.interface';
+import { Codop } from '../interfaces/codops-list.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CodopsListResolver implements Resolve<CodopList[]> {
+export class CodopsListResolver implements Resolve<Codop[]> {
 
   constructor(private codopsService: CodopsService) { }
 
-  resolve(): Observable<CodopList[]> {
+  resolve(): Observable<Codop[]> {
     const json: CodopFilter = {
       code: null,
       serviceCodeId: null

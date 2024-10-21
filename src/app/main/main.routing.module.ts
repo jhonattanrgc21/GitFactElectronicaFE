@@ -8,6 +8,8 @@ import { PublicServiceComponent } from "../public-service/public-service.compone
 import { MainComponent } from "./main.component";
 import { CodopsListComponent } from "../codops-list/codops-list.component";
 import { InsertCodopComponent } from "../insert-codop/insert-codop.component";
+import { CodopsListResolver } from "../codops-list/resolvers/codops-list.resolver";
+import { ServiceCodeResolver } from "../codops-list/resolvers/service-code.resolver";
 
 const routes: Routes = [
   {
@@ -49,11 +51,13 @@ const routes: Routes = [
         path: "codopsList",
         component: CodopsListComponent,
         canActivate: [AuthGuard],
+        resolve: {codopsList: CodopsListResolver, serviceCodeList: ServiceCodeResolver}
       },
       {
         path: "codop-form",
         component: InsertCodopComponent,
         canActivate: [AuthGuard],
+        resolve: {serviceCodeList: ServiceCodeResolver}
       },
     ],
   },

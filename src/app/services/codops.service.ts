@@ -6,21 +6,21 @@ import { ServiceCodeResponse } from '../codops-list/interfaces/service-code.inte
 import { CodopFilter } from '../codops-list/interfaces/codop-filter.interface';
 import { CreateCodop } from '../insert-codop/interfaces/create-codop.interface';
 import { GeneralResponse } from '../shared/interfaces/generalResponse.interface';
-import { CodopsListResponse } from '../codops-list/interfaces/codops-List.interface';
 import { ActiveCodop } from '../codops-list/interfaces/active-codop.interface';
+import { CodopsListResponse } from '../codops-list/interfaces/codops-list.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CodopsService {
-  url =  `${environment.apiUrl}/electronicbill`;
+  url =  environment.apiUrl;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   private getHeaders(): HttpHeaders {
     const token = this.authService.geToken();
     return new HttpHeaders({
-      'Content-Type': 'text/plain',
+      'Content-Type': 'text/json',
       'Accept': '*/*',
       'X-AUTH-TOKEN': token,
     });

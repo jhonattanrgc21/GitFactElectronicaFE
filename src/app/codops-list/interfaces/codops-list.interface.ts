@@ -1,9 +1,9 @@
 export interface CodopsListResponse {
-  codopList: CodopList[];
+  codopList: Codop[];
   type:      string;
 }
 
-export interface CodopList {
+export interface Codop {
   serviceCodeId: number;
   code:          string;
   iva:           number;

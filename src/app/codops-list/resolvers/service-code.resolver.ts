@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceCodeService implements Resolve<ServiceCode[]>{
+export class ServiceCodeResolver implements Resolve<ServiceCode[]>{
 
   constructor(private codopsService: CodopsService) { }
 
