@@ -13,15 +13,19 @@ import { PDFBillDialog } from "./public-service/public-service.component";
 import { MainModule } from "./main/main.module";
 import { AuthService } from "./core/auth/services/auth/auth.service";
 import { CreditNoteAlertDialog } from "./credit-note/credit-note-alert-dialog";
+import { ConfirmationPopupComponent } from './shared/components/confirmation-popup/confirmation-popup.component';
+import { InformationPopupComponent } from './insert-codop/components/information-popup/information-popup.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ConfirmationPopupComponent, InformationPopupComponent],
   entryComponents: [
     PublicServiceComponent,
     PublicServiceReceiptDetailModalComponent,
     InsertBillAlertDialog,
     PDFBillDialog,
     CreditNoteAlertDialog,
+    ConfirmationPopupComponent,
+    InformationPopupComponent
   ],
   imports: [
     BrowserModule,

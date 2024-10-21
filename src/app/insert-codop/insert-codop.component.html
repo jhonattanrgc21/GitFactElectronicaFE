@@ -1,3 +1,89 @@
-<p>
-  insert-codop works!
-</p>
+<div id="section-container">
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [diameter]="60" *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div id="content">
+    <h2 id="main-header">{{ titleForm }}</h2>
+    <hr class="style-one">
+    <br/>
+    <form [formGroup]="myForm">
+      <mat-form-field class="insert-input">
+        <mat-label>Número de codop</mat-label>
+        <input matInput formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
+        <mat-error *ngIf="f.code.errors?.required">El número es requerido.</mat-error>
+        <mat-error *ngIf="(f.code.errors?.minlength || f.code.errors?.maxlength)">
+          El número de codop debe tener 6 dígitos.
+        </mat-error>
+        <mat-error *ngIf="f.code.errors?.invalidNumber">Este campo solo admite valores numéricos.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Detalle de la factura electrónica</mat-label>
+        <input matInput formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.type.errors }">
+        <mat-error *ngIf="f.type.errors?.required">El detalle de la factura es obligatorio.</mat-error>
+        <mat-error *ngIf="f.type.errors?.invalidCharacter">Este campo no admite caracteres especiales. </mat-error>
+        <mat-error *ngIf="f.type.errors?.maxlength">El detalle de la factura debe tener un máximo de 40 caracteres.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Operador" formControlName="operator" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.operator.errors }">
+          <mat-option [value]="null">Seleccione una opción</mat-option>
+          <mat-option [value]="'+'">+</mat-option>
+          <mat-option [value]="'-'">-</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.operator.errors?.required">Seleccione un tipo de operador.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+        <mat-error *ngIf="f.description.errors?.required">La descripción es obligatoria.</mat-error>
+        <mat-error *ngIf="f.type.errors?.invalidCharacter">Este campo no admite caracteres especiales. </mat-error>
+        <mat-error *ngIf="f.description.errors?.maxlength">La descripción debe tener máximo 80 caracteres.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Genera iva" formControlName="iva" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.iva.errors }">
+          <mat-option [value]="null">Seleccione una opción</mat-option>
+          <mat-option [value]="'1'">Si</mat-option>
+          <mat-option [value]="'0'">No</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.iva.errors?.required">Debe seleccionar una opción.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Es iva" formControlName="isIva" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.isIva.errors }">
+          <mat-option [value]="null">Seleccione una opción</mat-option>
+          <mat-option [value]="'1'">Si</mat-option>
+          <mat-option [value]="'0'">No</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.iva.errors?.required">Debe seleccionar una opción.</mat-error>
+        <mat-error *ngIf="f.isIva.errors?.conflictingIva">
+          No se puede seleccionar que genera IVA y que es IVA al mismo tiempo.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Catálogo de bienes y servicios" formControlName="serviceCodeId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.serviceCodeId.errors }">
+          <mat-option [value]="null">Seleccione una opción</mat-option>
+          <mat-option *ngFor="let serviceCode of serviceCodeList"
+              [value]="serviceCode.serviceCodeId">{{serviceCode.serviceName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.serviceCodeId.errors?.required">Debe seleccionar una opción.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="insert-input">
+        <mat-select placeholder="Estado para la facturación " formControlName="isActive" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.isActive.errors }">
+          <mat-option [value]="null">Seleccione una opción</mat-option>
+          <mat-option [value]="'1'">Activo</mat-option>
+          <mat-option [value]="'0'">Inactivo</mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.iva.errors?.required">Debe seleccionar una opción.</mat-error>
+      </mat-form-field>
+
+      <div id="search-button">
+        <button (click)="onSubmit()" mat-raised-button color="primary" class="credix-theme" [disabled]="myForm.invalid"><i class="material-icons">add_circle</i>Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
