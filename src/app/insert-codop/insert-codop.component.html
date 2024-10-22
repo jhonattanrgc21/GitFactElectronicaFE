@@ -8,7 +8,7 @@
     <br/>
     <form [formGroup]="myForm">
       <mat-form-field class="insert-input">
-        <mat-label>Número de codop</mat-label>
+        <mat-label>Número del codop</mat-label>
         <input matInput formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
         <mat-error *ngIf="f.code.errors?.required">El número es requerido.</mat-error>
         <mat-error *ngIf="(f.code.errors?.minlength || f.code.errors?.maxlength)">

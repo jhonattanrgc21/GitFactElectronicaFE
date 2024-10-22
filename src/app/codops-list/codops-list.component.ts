@@ -46,7 +46,6 @@ export class CodopsListComponent implements OnInit, AfterViewChecked {
     public snackBar: MatSnackBar,
     private _fb: FormBuilder,
     private cdref: ChangeDetectorRef,
-    private router: Router,
     private activateRoute: ActivatedRoute,
   ) {
     this.myForm = this._fb.group({
@@ -68,6 +67,23 @@ export class CodopsListComponent implements OnInit, AfterViewChecked {
     this.codopList = this.activateRoute.snapshot.data['codopsList'];
     this.serviceCodeList = this.activateRoute.snapshot.data['serviceCodeList'];
     this.setCodopTable();
+
+
+    this.dataSource.filterPredicate = (data: Codop, filter: string) => {
+      const formattedFilter = filter.trim().toLowerCase();
+      const filterIva = formattedFilter === 'sí' ? '1' : formattedFilter === 'no' ? '0' : null;
+      const serviceCode: ServiceCode = this.serviceCodeList.find(elem => elem.serviceName.toLowerCase().includes(formattedFilter));
+
+      return (
+        data.code.toLowerCase().includes(formattedFilter) ||
+        data.type.toLowerCase().includes(formattedFilter) ||
+        data.operator.toLowerCase().includes(formattedFilter) ||
+        data.description.toLowerCase().includes(formattedFilter) ||
+        (filterIva !== null && String(data.iva) === filterIva) ||
+        (filterIva !== null && String(data.isIva) === filterIva) ||
+        (serviceCode ? String(data.serviceCodeId) === String(serviceCode.serviceCodeId) : false)
+      );
+    };
   }
 
   ngAfterViewChecked() {
@@ -137,7 +153,7 @@ export class CodopsListComponent implements OnInit, AfterViewChecked {
       if (this.codopList.length == 0 || data.type == 'error') {
         this.openSnackBar(
           "No se encontraron datos",
-          "Revisa los filtros insertados"
+          "Revisa los filtros ingresados"
         );
       }
       this.setCodopTable();
